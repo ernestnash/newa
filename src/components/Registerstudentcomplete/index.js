@@ -1,12 +1,19 @@
-import React, { useState,useEffect } from "react";
-import validator from 'validator'
+import React,{useState,useEffect} from 'react'
 import Header from '../Header'
 import "./styles.css"
 import img from "../../assets/jedd.jpg"
 import { auth, db } from "../firebase";
 import { toast, ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
+import {  googleProvider,facebookProvider,GithubProvider, TwitterProvider } from '../firebase';
 import { useSelector,useDispatch } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useForm } from "react-hook-form";
+import validator from 'validator'
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import * as yup from "yup";
+import { Formik } from "formik";
 
 
 
@@ -15,28 +22,28 @@ function Registerstudentcomplete({history}) {
 
 let {user} = useSelector((state)=> ({...state}));
 let dispatch = useDispatch();
+    const [loading,setLoading] = useState(false)
 
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+      reset,
+      trigger,
+    } = useForm();
+  
 if(user !== null){
     history.push("/")
   }
     const [email, setStudenEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     useEffect(()=>{
        setStudenEmail(window.localStorage.getItem("studentEmailForRegistration"));
     }, [])
 
-    const register = async(event)=>{
-        event.preventDefault();
-        let errors = {};
-
-        //validation
-        if(!email || !password){
-            toast.error("Email and Password is required!")
-        }else if(password.length < 6){
-            toast.error("Password should have at least 6 characters.")
-        }else{
-
+    const onSubmit = async(data)=>{
+       setLoading(true)
+       var password = data.password
             try{
                 const result = await auth.signInWithEmailLink(
                     email, 
@@ -64,17 +71,20 @@ if(user !== null){
                         read: true,
                         location:"",
                         bio:"",
+                        type:"schoolEmail",
                         timestamp: Date.now()
                     })   
                     //redirect
+                     setLoading(false)
                     history.push('/')
                 }
                 
                 }catch(error){
+                  setLoading(false)
                 //
                 toast.error(error.message)
             }
-        }
+        
 
 
 
@@ -91,17 +101,43 @@ if(user !== null){
 
       <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Complete registration as a student</span></div>
       <div></div> 
-      <div style={{marginBottom:15}}><input  style={{width: 250,height:35,border:"2px solid #45CBB2",textAlign: "center"}} value={email} type="email"
-            onChange={(e) => {
-                setStudenEmail(e.target.value)
-            }}
-             placeholder="Student E mail"/></div>
-      <div style={{marginBottom:15}}><input  style={{width: 250,height:35,border:"2px solid #45CBB2",textAlign: "center"}}  type="password"
-            onChange={(e) => {
-                setPassword(e.target.value)
-            }}
-             placeholder="Create Password"/></div>
-      <div><button onClick={register} style={{backgroundColor: "#45CBB2",width:250,height:40,color: "#fff",fontSize:20,border: "none"}}>COMPLETE REGISTRATION</button></div>
+                  <div className="form-group">
+              {/* <label className="col-form-label">E mail </label> */}
+              <input
+              placeholder="Enter E mail"
+                type="text"
+                className={`form-control ${errors.email && "invalid"}`}
+                value={email}              
+              />
+
+            </div>
+
+            <div className="form-group">
+              {/* <label className="col-form-label">Create Password</label> */}
+              <input
+              
+                placeholder="Create Password"
+                type="password"
+                className={`form-control ${errors.password && "invalid"}`}
+                {...register("password", { required: "Password is Required",
+                pattern: {
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+                  message: "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character",
+                },
+               })}
+               onKeyUp={() => {
+                trigger("password");
+              }}
+              />
+              {errors.password && (
+                <small className="text-danger">{errors.password.message}</small>
+              )}
+            </div>
+
+           
+            <div><button onClick={handleSubmit(onSubmit)} style={{backgroundColor: "#45CBB2",width:250,height:40,color: "#fff",fontSize:20,border: "none"}}>
+        {loading ? <CircularProgress style={{height:25,width:25,color:"#fff"}}/> : <span>COMPLETE REGISTRATION</span>}
+        </button></div> 
       <div style={{marginTop:15,fontWeight:"600"}}><div class="hr-theme-slash-2"><div class="hr-line"></div><div class="hr-icon"><div class="circle"><span style={{color: "#000"}}>OR</span></div></div><div class="hr-line"></div></div></div>
 
       <div style={{marginTop:15,fontWeight:"500"}}>

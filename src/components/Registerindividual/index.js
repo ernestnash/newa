@@ -66,6 +66,7 @@ function Registerindividual({history}) {
                             read: true,
                             location:"",
                             bio:"",
+                            type:"personalEmail",
                             timestamp: Date.now()
                           })
                               .then((r) => {
