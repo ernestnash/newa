@@ -4,7 +4,7 @@ import Donut from "./Donut"
 
 function Charts() {
     return (
-        <div className="App">
+        <div className="">
         <div className="container">
           <div className="section">
             <Donut />

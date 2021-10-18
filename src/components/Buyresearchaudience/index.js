@@ -1,9 +1,63 @@
-import React from 'react'
-import Header from '../Header'
+import React,{useContext,useState,useEffect} from 'react'
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import PriceChangeIcon from '@mui/icons-material/PriceChange';
+import img from "../../assets/jedd.jpg"
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import "./styles.css"
-import { useSelector,useDispatch } from 'react-redux';
-
-
+import firebase from 'firebase'
+import { useDispatch,useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import PropTypes from 'prop-types';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import CloseIcon from '@mui/icons-material/Close';
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
+import TextField from '@mui/material/TextField';
+import Collapse from '@mui/material/Collapse';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { auth,db,storage } from "../firebase"
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Charts from '../Charts';
+import $ from 'jquery';
+import EditIcon from '@mui/icons-material/Edit';
+import { toast, ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
+import { getAuth, deleteUser } from "firebase/auth";
+import Mysurveys from '../Mysurveys';
+import Header from '../Header';
 
 function Buyresearchaudience({history}) {
     let {user} = useSelector((state)=> ({...state}));
@@ -14,32 +68,12 @@ function Buyresearchaudience({history}) {
     return (
         <body>
             <Header />
+            <ToastContainer />
             <div className="buyResearchAudience">
-            <div style={{textAlign: "center",fontSize:30,fontWeight:"600",marginBottom:50}}><span>BUY TARGETED AUDIENCE</span></div>
+            <div style={{textAlign: "center",fontSize:30,fontWeight:"600",marginBottom:0}}><span>MY SURVEYS</span></div>
             
-              <div style={{display: "flex",flexWrap: "wrap"}}>
-                  <div style={{marginLeft:50,display:"flex",alignItems:"center",objectFit:"contain"}}>
-                      <div style={{marginRight:35}}><img style={{height:35,width:30}} src="https://www.pngall.com/wp-content/uploads/5/Google-Maps-Location-Mark.png" alt=""/></div>
-                      <div><span style={{marginRight:20}}>LOCATION: </span><span><input type="text"/></span></div>
-                  </div>
-                  <div style={{marginLeft:50,display:"flex",alignItems:"center",objectFit:"contain"}}>
-                      <div style={{marginRight:15}}><img style={{height:35,width:50}} src="https://w7.pngwing.com/pngs/271/883/png-transparent-male-and-female-signage-female-gender-symbol-mentoring-s-blue-text-logo.png" alt=""/></div>
-                      <div><span style={{marginRight:15}}>GENDER: </span><span><input type="text"/></span></div>
-                  </div>
-              </div>
-            
-              <div style={{display: "flex",flexWrap: "wrap",marginTop:20}}>
-                  <div style={{marginLeft:50,display:"flex",alignItems:"center",objectFit:"contain"}}>
-                      <div style={{marginRight:35}}><img style={{height:35,width:30}} src="https://www.pngall.com/wp-content/uploads/5/Google-Maps-Location-Mark.png" alt=""/></div>
-                      <div><span style={{marginRight:20}}>LOCATION: </span><span><input type="text"/></span></div>
-                  </div>
-                  <div style={{marginLeft:50,display:"flex",alignItems:"center",objectFit:"contain"}}>
-                      <div style={{marginRight:15}}><img style={{height:35,width:50}} src="https://w7.pngwing.com/pngs/271/883/png-transparent-male-and-female-signage-female-gender-symbol-mentoring-s-blue-text-logo.png" alt=""/></div>
-                      <div><span style={{marginRight:15}}>GENDER: </span><span><input type="text"/></span></div>
-                  </div>
-              </div>    
-
-
+            <Charts   />
+       <Mysurveys uid={`${auth?.currentUser?.uid}`}/>
             </div>
         </body>
     )

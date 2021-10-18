@@ -58,6 +58,7 @@ import "react-toastify/dist/ReactToastify.css"
 import { getAuth, deleteUser } from "firebase/auth";
 import Mysurveys from '../Mysurveys';
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuDialogContent-root': {
     padding: theme.spacing(2),
@@ -829,7 +830,7 @@ const deleteUser1 = (e) => {
 
       {user &&(
         <>
-              <MenuItem
+              {/* <MenuItem
            onClick={handleClickDashboardOpen}
               >
               <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -838,7 +839,7 @@ const deleteUser1 = (e) => {
                 </Badge>
               </IconButton>
               <span>DASHBOARD</span>
-            </MenuItem>
+            </MenuItem> */}
               <MenuItem onClick={handleProfileMenuOpen}>
               <IconButton
                 size="large"
@@ -875,7 +876,10 @@ const deleteUser1 = (e) => {
         <img src={img} style={{height:60,width:120,marginLeft:-15, objectFit:"cover"}}/>
 
         </a>
-          <Search style={{marginLeft:10}}>
+
+{user &&(
+  <>
+            <Search style={{marginLeft:10}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -884,6 +888,9 @@ const deleteUser1 = (e) => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+  </>
+)}
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -907,17 +914,7 @@ const deleteUser1 = (e) => {
             )}
             {user &&(
               <>
-                    <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-              onClick={handleClickDashboardOpen}
-            >
-              {/* <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge> */}
-              <span style={{fontSize:20}}>DASHBOARD</span>
-            </IconButton>
+ 
             <IconButton
               size="large"
               edge="end"
@@ -946,7 +943,7 @@ const deleteUser1 = (e) => {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MenuIcon />
             </IconButton>
           </Box>
         </Toolbar>

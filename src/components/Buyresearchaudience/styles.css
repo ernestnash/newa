@@ -1,8 +1,6 @@
 .buyResearchAudience{
-    height: calc(100vh - 50px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  background-color: #DEDEDE;
+  height: 100%;
+  padding: 5px;
+  margin-top: 70px;
   }

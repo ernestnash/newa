@@ -344,9 +344,8 @@ function Login() {
             placeholder="password"/>
 					</div>
 					<div class="row align-items-center remember">
-						<input type="checkbox" onChange={(e) => {
-              setRem(e.target.value)
-          }}/>Remember Me   
+						<input type="" 
+            /><i>Simple Academic Survey Web</i>   
 					</div>
 					<div class="form-group">
 						<button  onClick={login}  class="btn float-right login_btn">{loading ? <CircularProgress style={{height:25,width:25,color:"blue"}}/> : <span>Login</span>}</button>
@@ -356,10 +355,10 @@ function Login() {
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
 					Don't have an account?
-                    <a href="#" style={{color: "#7DF9FF"}} onClick={handleClickOpen}>Sign Up</a>
+                    <a href="#" style={{color: "#45CBB2"}} onClick={handleClickOpen}>Sign Up</a>
     				</div>
 				<div class="d-flex justify-content-center">
-					<a href="#" style={{color: "#7DF9FF"}} onClick={handleClickOpen1}>Forgot your password?</a>
+					<a href="#" style={{color: "#45CBB2"}} onClick={handleClickOpen1}>Forgot your password?</a>
 				</div>
 			</div>
 		</div>
@@ -371,11 +370,11 @@ function Login() {
         open={open}
         
       >
-        <BootstrapDialogTitle  id="customized-dialog-title" style={{backgroundColor: "#000",color:"#fff",borderBottom:"1px solid #fff"}} onClose={handleClose} >
+        <BootstrapDialogTitle  id="customized-dialog-title" style={{backgroundColor: "#3E2F34 ",color:"#fff",borderBottom:"1px solid #fff"}} onClose={handleClose} >
           Pre-SignUp Modal
         </BootstrapDialogTitle>
         <DialogContent dividers class="anim">
-          <Typography gutterBottom style={{backgroundColor: "#000"}}>
+          <Typography gutterBottom style={{backgroundColor: "#3E2F34 "}}>
 
         <div className="btnsView" style={{display: "flex",flexWrap: "wrap"}}>
             <a style={{fontSize:18}} href="/registerInstitution">
@@ -446,7 +445,7 @@ function Login() {
         open={open1}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
-        PASSWORD RESET FORM
+        <span style={{color: "#45CBB2"}}>PASSWORD RESET FORM</span>
         </BootstrapDialogTitle>
         <DialogContent dividers>
 
@@ -466,11 +465,11 @@ function Login() {
         />
           </Typography>
           <Typography gutterBottom style={{marginTop:20}}>
-          <i style={{fontWeight:"600"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
+          <i style={{fontWeight:"600",color: "#fff"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
           </Typography>
         </DialogContent>
         <DialogActions>
-        <button onClick={resetPasword}  disabled={!email1} style={{backgroundColor: "#088FFA",color:"#fff",fontWeight:"600"}}  class="btn float-right login_btn">Submit </button>
+        <button onClick={resetPasword}  disabled={!email1} style={{backgroundColor: "#45CBB2",color:"#fff",fontWeight:"600"}}  class="btn float-right login_btn">Submit </button>
 
         </DialogActions>
       </BootstrapDialog>

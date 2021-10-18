@@ -36,10 +36,7 @@ function Mysurveys({uid}) {
 
     return (
         <body >
-            <div className="OngoingBody">
-                <div style={{textAlign: "center",fontSize:30,fontWeight:"600"}}><span>My SURVEYS</span>
-                </div>
- 
+            <div className="OngoingBody1">
                 <div style={{marginTop:0}}>
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 440 }}>

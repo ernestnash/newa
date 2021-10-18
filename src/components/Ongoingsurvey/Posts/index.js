@@ -271,7 +271,7 @@ dividers>
   
                 </TableRow>
                 <TableRow>
-                  <TableCell style={{ paddingBottom: 0, paddingTop: 0,border:"1px solid #0476D0" }} colSpan={6}>
+                  <TableCell style={{ paddingBottom: 0, paddingTop: 0,border:"1px solid #45CBB2" }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                       <Box sx={{ margin: 1 }}>
                         <Typography variant="h6" gutterBottom component="div">
@@ -279,10 +279,10 @@ dividers>
                         <Table size="small" aria-label="purchases">
                           <TableHead>
                             <TableRow>
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}}>Date Modified</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}}>Owner Email</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}} align="right">Status</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}} align="right">More</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Date Modified</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Owner Email</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Status</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">More</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -293,7 +293,7 @@ dividers>
                                 <TableCell>{ownerEmail}</TableCell>
                                 <TableCell align="right">Open</TableCell>
                                 <TableCell align="right">
-                                    <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#0476D0",color:"#fff",border:"none"}}>Respond</button>
+                                    <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Respond</button>
                                 </TableCell>
                               </TableRow>
                           </TableBody>

@@ -1,7 +1,6 @@
-
 import { useForm } from "react-hook-form";
 
-function Test() {
+function App() {
   const {
     register,
     handleSubmit,
@@ -11,7 +10,7 @@ function Test() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data.name);
     reset();
   };
 
@@ -75,8 +74,8 @@ function Test() {
                 className={`form-control ${errors.email && "invalid"}`}
                 {...register("email", { required: "Email is Required" ,
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@students[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid school email address",
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
                 }})}
                 onKeyUp={() => {
                   trigger("email");
@@ -139,4 +138,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default App;

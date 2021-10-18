@@ -88,7 +88,7 @@ function App() {
   }
   const buyAudience = (e) =>{
     e.preventDefault()
-    history.push("/buyresearchaudience")
+    history.push("/mydashboard")
   }
 
 
@@ -115,7 +115,7 @@ function App() {
           <Route exact path="/ongoingsurveys" component={Ongoingsurvey}/>
           <Route exact path="/researchfindings" component={Researchfindings}/>
           <Route exact path="/recommendedbooks" component={Recommendedbooks}/>
-          <Route exact path="/buyresearchaudience" component={Buyresearchaudience}/>
+          <Route exact path="/mydashboard" component={Buyresearchaudience}/>
           <Route exact path="/registerstudent/complete" component={Registerstudentcomplete}/>
 
           
@@ -125,7 +125,7 @@ function App() {
   <Box sx={{ pb: 7 }}  ref={ref}>
       <CssBaseline />
 
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0,zIndex: 999 }} elevation={3}>
         <BottomNavigation
         style={{height: 70}}
           showLabels
@@ -140,7 +140,7 @@ function App() {
           <BottomNavigationAction  onClick={ongoingsurveys} label="Ongoing Surveys"   icon={<SpeedIcon onClick={ongoingsurveys}/>}/>
           <BottomNavigationAction  onClick={researchFindings} label="Research Findings" icon={<CancelPresentationIcon />} onClick={researchFindings}/>
           <BottomNavigationAction   onClick={recommendedBooks} label="Papers and Books"  icon={<LocalLibraryIcon />} onClick={recommendedBooks}/>
-          <BottomNavigationAction  onClick={buyAudience} label="Targetted Audience" icon={<ShoppingBasketIcon />} onClick={buyAudience}/>
+          <BottomNavigationAction  onClick={buyAudience} label="Dashboard" icon={<ShoppingBasketIcon />} onClick={buyAudience}/>
 
         </BottomNavigation>
       </Paper>

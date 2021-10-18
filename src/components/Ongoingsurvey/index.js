@@ -52,12 +52,12 @@ function Ongoingsurvey({history}) {
         <TableHead 
         >
           <TableRow >
-            <TableCell sx={{backgroundColor: "#0476D0"}}/>
-            <TableCell sx={{backgroundColor: "#0476D0",fontWeight:"900"}}>SURVEY NAME</TableCell>
-            <TableCell sx={{backgroundColor: "#0476D0",fontWeight:"900"}} align="right">RESPONSES</TableCell>
-            <TableCell sx={{backgroundColor: "#0476D0"}}/>
-            <TableCell sx={{backgroundColor: "#0476D0"}}/>
-            <TableCell sx={{backgroundColor: "#0476D0"}}/>
+            <TableCell sx={{backgroundColor: "#45CBB2"}}/>
+            <TableCell sx={{backgroundColor: "#45CBB2",fontWeight:"900"}}>SURVEY NAME</TableCell>
+            <TableCell sx={{backgroundColor: "#45CBB2",fontWeight:"900"}} align="right">RESPONSES</TableCell>
+            <TableCell sx={{backgroundColor: "#45CBB2"}}/>
+            <TableCell sx={{backgroundColor: "#45CBB2"}}/>
+            <TableCell sx={{backgroundColor: "#45CBB2"}}/>
           </TableRow>
         </TableHead>
         <TableBody>

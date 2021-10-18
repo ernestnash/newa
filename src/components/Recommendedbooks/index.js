@@ -204,12 +204,12 @@ stickyHeader aria-label="sticky table">
 
 >
 <TableRow >
-  <TableCell sx={{borderBottom: "2px solid #0476D0"}}/>
-  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #0476D0"}}>ACADEMIC FIELD</TableCell>
-  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #0476D0"}} align="right">TOPIC</TableCell>
-  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #0476D0"}} align="right">PAPER/BOOK TITLE</TableCell>
-  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #0476D0"}} align="right">TIME ADDED</TableCell>
-  <TableCell sx={{backgroundColor: "",borderBottom: "2px solid #0476D0"}}/>
+  <TableCell sx={{borderBottom: "2px solid #45CBB2"}}/>
+  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #45CBB2",color:"#45CBB2"}}>ACADEMIC FIELD</TableCell>
+  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #45CBB2",color:"#45CBB2"}} align="right">TOPIC</TableCell>
+  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #45CBB2",color:"#45CBB2"}} align="right">PAPER/BOOK TITLE</TableCell>
+  <TableCell sx={{backgroundColor: "",fontWeight:"900",borderBottom: "2px solid #45CBB2",color:"#45CBB2"}} align="right">TIME ADDED</TableCell>
+  <TableCell sx={{backgroundColor: "",borderBottom: "2px solid #45CBB2"}}/>
 </TableRow>
 </TableHead>
 <TableBody>
@@ -289,9 +289,10 @@ dividers>
 onClose={handleClose}
 aria-labelledby="customized-dialog-title"
 open={open}
+
 >
 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-RECOMMEND RESEARCH PAPERS/BOOKS 
+<span style={{color:"#45CBB2"}}>RECOMMEND RESEARCH PAPERS/BOOKS</span> 
 </BootstrapDialogTitle>
 <DialogContent dividers>
 <Typography gutterBottom>
@@ -326,11 +327,11 @@ multiline
 />
 </Typography>
 <Typography gutterBottom style={{marginTop:20}}>
-<i style={{fontWeight:"600"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
+<i style={{fontWeight:"600",color:"#fff"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
 </Typography>
 </DialogContent>
 <DialogActions>
-<Button style={{fontWeight:"600"}} autoFocus onClick={add}>
+<Button style={{fontWeight:"600",border: "2px solid #45CBB2",color: "#45CBB2"}} autoFocus onClick={add}>
   Add
 </Button>
 </DialogActions>
