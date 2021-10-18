@@ -245,7 +245,7 @@ function Home({history}) {
         TransitionComponent={Transition}
         style={{justifyContent: "center",margin:  "auto"}}
       >
-        <AppBar sx={{ position: 'relative' }} style={{backgroundColor: "#000",marginTop:63}}>
+        <AppBar sx={{ position: 'relative' }} style={{backgroundColor: "#45CBB2",marginTop:0}}>
         <Header/>
 
         </AppBar>

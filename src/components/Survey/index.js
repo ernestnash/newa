@@ -278,7 +278,7 @@ function Survey({ handleClose1 }) {
 
   return (
     <div className={classes.grow}>
-    <AppBar position="static" style={{backgroundColor: '#000',marginTop:75}}>
+    <AppBar position="static" style={{backgroundColor: '#45CBB2',marginTop:75}}>
       <Toolbar>
         <IconButton
           edge="start"
