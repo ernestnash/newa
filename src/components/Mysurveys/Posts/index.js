@@ -368,7 +368,7 @@ dividers>
   
                 </TableRow>
                 <TableRow>
-                  <TableCell style={{ paddingBottom: 0, paddingTop: 0,border:"1px solid #0476D0" }} colSpan={6}>
+                  <TableCell style={{ paddingBottom: 0, paddingTop: 0,border:"1px solid #45CBB2" }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                       <Box sx={{ margin: 1 }}>
                         <Typography variant="h6" gutterBottom component="div">
@@ -376,15 +376,15 @@ dividers>
                         <Table size="small" aria-label="purchases">
                           <TableHead>
                             <TableRow>
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}}>Date Modified</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}}>Responses</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Date Modified</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Responses</TableCell>
                               {active === true &&(
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}} align="right">Opened</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Opened</TableCell>
                               )}
                               {active === false &&(
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}} align="right">Closed</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Closed</TableCell>
                               )}
-                              <TableCell style={{fontWeight:"600",color:"#0476D0"}} align="right">Delete</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Delete</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -393,18 +393,18 @@ dividers>
                                   {date.toDateString()}, {date.toLocaleTimeString()}
                                 </TableCell>
                                 <TableCell>
-                                <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#0476D0",color:"#fff",border:"none"}}>View</button>
+                                <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>View</button>
                                 </TableCell>
                                 <TableCell align="right">
                                   {active === true &&(
-                                <button  onClick={closeSurvey} style={{width:80,backgroundColor:"#0476D0",color:"#fff",border:"none"}}>close</button>
+                                <button  onClick={closeSurvey} style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>close</button>
                                   )}
                                    {active === false &&(
-                                <button onClick={openSurvey}  style={{width:80,backgroundColor:"#0476D0",color:"#fff",border:"none"}}>open</button>
+                                <button onClick={openSurvey}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>open</button>
                                   )}
                                 </TableCell>
                                 <TableCell align="right">
-                                    <button onClick={deleteSurvey}  style={{width:80,backgroundColor:"#0476D0",color:"#fff",border:"none"}}>Delete</button>
+                                    <button onClick={deleteSurvey}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Delete</button>
                                 </TableCell>
                               </TableRow>
                           </TableBody>
