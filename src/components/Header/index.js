@@ -879,7 +879,7 @@ const deleteUser1 = (e) => {
 
 {user &&(
   <>
-            <Search style={{marginLeft:10}}>
+            {/* <Search style={{marginLeft:10}}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -887,7 +887,7 @@ const deleteUser1 = (e) => {
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
-          </Search>
+          </Search> */}
   </>
 )}
 
