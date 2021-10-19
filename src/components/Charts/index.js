@@ -4,8 +4,8 @@ import Donut from "./Donut"
 
 function Charts() {
     return (
-        <div className="">
-        <div className="container">
+        <div  className="">
+        <div  className="container">
           <div className="section">
             <Donut />
           </div>

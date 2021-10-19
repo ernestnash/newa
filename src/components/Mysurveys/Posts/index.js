@@ -359,10 +359,10 @@ dividers>
         >
           {/* <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem> */}
-           <MenuItem> <CSVLink data={csvData}><DocumentScannerIcon style={{color: "#000"}}/> <span style={{color: "#000"}}>Export to Csv</span></CSVLink></MenuItem>;
-          <MenuItem onClick={downloadExcel}><SubjectIcon /> Export to Excel</MenuItem>
+           <MenuItem> <CSVLink data={csvData}><DocumentScannerIcon style={{color: "#45CBB2"}}/> <span style={{color: "#000"}}>Export to Csv</span></CSVLink></MenuItem>;
+          <MenuItem onClick={downloadExcel}><SubjectIcon style={{color: "#45CBB2"}} /> Export to Excel</MenuItem>
           
-          <MenuItem onClick={downloadPdf}><PrintIcon /> Export to Pdf</MenuItem>
+          <MenuItem onClick={downloadPdf}><PrintIcon style={{color: "#45CBB2"}} /> Export to Pdf</MenuItem>
         </Select>
                      </TableCell>
   
@@ -379,7 +379,7 @@ dividers>
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Date Modified</TableCell>
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Responses</TableCell>
                               {active === true &&(
-                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Opened</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Open</TableCell>
                               )}
                               {active === false &&(
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Closed</TableCell>

@@ -75,7 +75,44 @@ const containerVariants = {
   }
 
 
-
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuDialogContent-root': {
+      padding: theme.spacing(2),
+    },
+    '& .MuDialogActions-root': {
+      padding: theme.spacing(1),
+    },
+  }));
+  
+  const BootstrapDialogTitle = (props) => {
+    const { children, onClose, ...other } = props;
+  
+    return (
+      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        {children}
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+    );
+  };
+  
+  BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+  };
+  
 
 function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescription}) {
 
@@ -100,15 +137,14 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
         setProfileUserData(doc.data());
     });
 }, [])
-  const addData = (e) =>{
-      e.preventDefault();
-      setLoading(true)
+  const addData = async(e) =>{
+    setLoading(true)
 
       if(!questions[0]){
         setLoading(false)
         toast.error("You cannot submit a survey without any question!")
       }else{
-        db.collection('surveys').add({
+        await db.collection('surveys').add({
             //
            questions,
            timestamp:  Date.now(),
@@ -123,8 +159,8 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
           setLoading(false)
           toast.success("Survey Form submitted successfully")})
         setQuestions([])
-        setFormDescription("")
-        setFormTitle("")
+        // setFormDescription("")
+        // setFormTitle("")
       }
   }
 
@@ -486,79 +522,43 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
   const handleClose1 = () => {
     setOpen1(false);
   };
-  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuDialogContent-root': {
-      padding: theme.spacing(2),
-    },
-    '& .MuDialogActions-root': {
-      padding: theme.spacing(1),
-    },
-  }));
-  
-  const BootstrapDialogTitle = (props) => {
-    const { children, onClose, ...other } = props;
-  
-    return (
-      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-        {children}
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            onClick={onClose}
-            sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </DialogTitle>
-    );
-  };
-  
-  BootstrapDialogTitle.propTypes = {
-    children: PropTypes.node,
-    onClose: PropTypes.func.isRequired,
-  };
-  
 
 
-  if(loading){
-    return(
 
-     <BootstrapDialog
-     onClose={handleClose1}
-     aria-labelledby="customized-dialog-title"
-     open={open1}
+//   if(loading){
+//     return(
+
+//      <BootstrapDialog
+//      onClose={handleClose1}
+//      aria-labelledby="customized-dialog-title"
+//      open={open1}
     
-   >
+//    >
 
-     <DialogContent 
-      style={{backgroundColor: "trasparency"}}          
-dividers>
-     <Typography gutterBottom >
+//      <DialogContent 
+//       style={{backgroundColor: "trasparency"}}          
+// dividers>
+//      <Typography gutterBottom >
      
-<div style={{alignItems: "center",display: "flex"}}>
-<div><CircularProgress /></div>
-<div style={{marginLeft:10}}> Loading... </div>
-</div>
+// <div style={{alignItems: "center",display: "flex"}}>
+// <div><CircularProgress /></div>
+// <div style={{marginLeft:10}}> Loading... </div>
+// </div>
 
  
-     </Typography>
+//      </Typography>
 
 
-     </DialogContent>
+//      </DialogContent>
 
-   </BootstrapDialog>
+//    </BootstrapDialog>
      
-    )
-  }else{
+//     )
+//   }else{
 
     return (
       <>
+
                       <ToastContainer/>
 
        <div style={{marginTop:'15px', marginBottom: '7px', paddingBottom:"30px"}}>
@@ -584,8 +584,19 @@ dividers>
                           <div>
                             <Paper elevation={2} style={{width:'100%'}}>
                               <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '15px', paddingTop: '20px', paddingBottom: '20px'}}>
+                                
                                 <Typography variant="h4" style={{fontFamily:'sans-serif Roboto', marginBottom:"15px"}}>
+                                {loading &&(
+
+     
+<div style={{alignItems: "center",display: "flex",justifyContent:"center"}}>
+<div><CircularProgress style={{color: "#45CBB2"}}/></div>
+<div style={{marginLeft:10,color:"#45CBB2"}}> Loading... </div>
+</div>
+
+      )}
                                   {formTitle}
+                                 
                                 </Typography>
                                 <Typography variant="subtitle1">
                                     {formDescription}
@@ -596,6 +607,7 @@ dividers>
                       </div>       
                   </Grid>  
                  </motion.div>
+
                   <Grid style={{paddingTop: '10px'}}>
                     <motion.div
                     variants={submitBtns}
@@ -642,7 +654,7 @@ dividers>
        </div>
        </>
   );
-  }
+  
 
  
 }

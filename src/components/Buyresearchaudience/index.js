@@ -59,11 +59,22 @@ import { getAuth, deleteUser } from "firebase/auth";
 import Mysurveys from '../Mysurveys';
 import Header from '../Header';
 
+
 function Buyresearchaudience({history}) {
     let {user} = useSelector((state)=> ({...state}));
+    const [surveys, setSurveys] = useState("Survey")
+    const [dash, setDash] = useState("")
+    const [showSurveys1, setSurveys1] = useState(false)
+    const [showDashboard1, setDashboard1] = useState(false)
 
-  
- 
+ const showSurveys = () =>{
+    setSurveys1(true)
+    setDashboard1(false)
+ }
+ const showDashboard = () =>{
+    setSurveys1(false)
+    setDashboard1(true)
+ }
 
     return (
         <body>
@@ -71,9 +82,31 @@ function Buyresearchaudience({history}) {
             <ToastContainer />
             <div className="buyResearchAudience">
             <div style={{textAlign: "center",fontSize:30,fontWeight:"600",marginBottom:0}}><span>MY SURVEYS</span></div>
-            
-            <Charts   />
-       <Mysurveys uid={`${auth?.currentUser?.uid}`}/>
+               <div style={{alignItems: "center",display: "flex",alignSelf: "center",justifyContent:"center"}}>
+               <Button onClick={showSurveys} variant="contained" style={{backgroundColor: "#45CBB2",fontWeight:"900"}} color="success">
+        Surveys
+      </Button>
+      <Button onClick={showDashboard} style={{backgroundColor: "#fff",color: "#45CBB2",fontWeight:"900"}} variant="contained" color="success">
+        Chart Summury
+      </Button>
+               </div>
+
+{/* {surveys === "surveys" || surveys === "" ?(
+     <Mysurveys style={{marginTop:15}} uid={`${auth?.currentUser?.uid}`}/>
+
+):(
+    <Charts />
+)} */}
+{showSurveys1 ?(
+    <Mysurveys style={{marginTop:15}} uid={`${auth?.currentUser?.uid}`}/>
+): showDashboard1 ?(
+<Charts />
+):(
+    <Mysurveys style={{marginTop:15}} uid={`${auth?.currentUser?.uid}`}/>
+
+)}
+               
+
             </div>
         </body>
     )

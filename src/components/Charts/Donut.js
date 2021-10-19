@@ -96,7 +96,7 @@ import { auth,db } from "../firebase";
     return (
         <>
         {activeSurveys === 0 && inActiveSurveys === 0 ?(
-          <Chart>
+          <Chart >
           <ChartLegend visible={false} />
     <ChartTooltip render={renderTooltip1} />
           <ChartSeries>
@@ -115,10 +115,10 @@ import { auth,db } from "../firebase";
           </ChartSeries>
         </Chart>
         ): (
-<Chart>
+<Chart >
         <ChartLegend visible={false} />
   <ChartTooltip render={renderTooltip} />
-        <ChartSeries>
+        <ChartSeries >
           <ChartSeriesItem
             type="donut"
             data={applicationsStatusThisMonth}
