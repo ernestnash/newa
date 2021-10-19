@@ -483,31 +483,25 @@ function addMoreQuestionField(){
 
 
             {ques.options.map((op, j)=>(
-                <div className="add_question_body" key={j}>
-                    {/* <Checkbox  color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} disabled/> */}
-                    {
-                        (ques.questionType!="text") ? 
-                        <input type={ques.questionType}  style={{marginRight:"10px"}}/> :
-                        <ShortTextIcon  style={{marginRight:"10px"}} />
+                                <div className="add_question_body" key={j}>
+                                    {/* <Checkbox  color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} disabled/> */}
+                                    {
+                                        (ques.questionType!="text") ? 
+                                        <input type={ques.questionType}  style={{marginRight:"10px"}}/> :
+                                        <ShortTextIcon style={{marginRight:"10px"}} />
 
-                    }
+                                    }
+                                    <div >
+                                        <input type="text" className="text_input" placeholder="option"  value={ques.options[j].optionText}onChange={(e)=>{handleOptionValue(e.target.value, i, j)}}></input>
+                                    </div>
 
-                    
-                    <div >
-                    <TextField 
-  fullWidth={true} 
-  placeholder="Option text" 
-  style={{marginTop: '5px'}} 
-  value={ques.options[j].optionText}
-  onChange={(e)=>{handleOptionValue(e.target.value, i, j)}}
-/>                    </div>
+                                    <CropOriginalIcon style={{color:"#5f6368"}}/>
 
-
-                    <IconButton aria-label="delete" onClick={()=>{removeOption(i, j)}}>
-                            <CloseIcon />
-                    </IconButton>
-                </div>   
-            ))}  
+                                    <IconButton aria-label="delete" onClick={()=>{removeOption(i, j)}}>
+                                            <CloseIcon />
+                                    </IconButton>
+                                </div>   
+                            ))}  
         
     
     
