@@ -357,8 +357,8 @@ dividers>
                   <Select
         sx={{border: "none"}}
         >
-          {/* <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem> */}
+          {/* <MenuItem value={10}>Ten</MenuItem> */}
+          <MenuItem  ><a href={`/surveys/replies/${postId}`}>View</a></MenuItem>
            <MenuItem> <CSVLink data={csvData}><DocumentScannerIcon style={{color: "#45CBB2"}}/> <span style={{color: "#000"}}>Export to Csv</span></CSVLink></MenuItem>;
           <MenuItem onClick={downloadExcel}><SubjectIcon style={{color: "#45CBB2"}} /> Export to Excel</MenuItem>
           

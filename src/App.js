@@ -11,7 +11,7 @@ import Registerindividual from './components/Registerindividual';
 import Ongoingsurvey from './components/Ongoingsurvey';
 import Researchfindings from './components/Researchfindings';
 import Recommendedbooks from './components/Recommendedbooks';
-import Buyresearchaudience from './components/Buyresearchaudience';
+import Mydashboard from './components/Mydashboard';
 import Registerstudentcomplete from './components/Registerstudentcomplete';
 import RegisterInstitutioncomplete from './components/RegisterInstitutioncomplete';
 import Box from '@mui/material/Box';
@@ -35,6 +35,7 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import "@progress/kendo-theme-material/dist/all.css";
 import "hammerjs";
 import Header from './components/Header';
+import Surveyreply from './components/Surveyreply';
 
 
 
@@ -115,8 +116,9 @@ function App() {
           <Route exact path="/ongoingsurveys" component={Ongoingsurvey}/>
           <Route exact path="/researchfindings" component={Researchfindings}/>
           <Route exact path="/recommendedbooks" component={Recommendedbooks}/>
-          <Route exact path="/mydashboard" component={Buyresearchaudience}/>
+          <Route exact path="/mydashboard" component={Mydashboard}/>
           <Route exact path="/registerstudent/complete" component={Registerstudentcomplete}/>
+          <Route exact path="/surveys/replies/:postId" component={Surveyreply}/>
 
           
         </Switch>

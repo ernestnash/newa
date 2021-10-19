@@ -60,7 +60,7 @@ import Mysurveys from '../Mysurveys';
 import Header from '../Header';
 
 
-function Buyresearchaudience({history}) {
+function Mydashboard({history}) {
     let {user} = useSelector((state)=> ({...state}));
     const [surveys, setSurveys] = useState("Survey")
     const [dash, setDash] = useState("")
@@ -112,4 +112,4 @@ function Buyresearchaudience({history}) {
     )
 }
 
-export default Buyresearchaudience
+export default Mydashboard

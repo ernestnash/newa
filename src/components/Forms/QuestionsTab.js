@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 //import QuestionHeader from './QuestionHeader';
 import {Grid} from '@material-ui/core';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import Switch from '@material-ui/core/Switch';
 import { Paper, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Accordion from '@material-ui/core/Accordion';
@@ -36,6 +36,30 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import { styled } from '@mui/material/styles';
+
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import ShortTextIcon from '@material-ui/icons/ShortText';
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import SubjectIcon from '@material-ui/icons/Subject';
+import BackupIcon from '@material-ui/icons/Backup';
+import LinearScaleIcon from '@material-ui/icons/LinearScale';
+import EventIcon from '@material-ui/icons/Event';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import AppsIcon from '@material-ui/icons/Apps';
+import {BsTrash} from "react-icons/bs"
+import Checkbox from '@material-ui/core/Checkbox';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
+import TextFieldsIcon from '@material-ui/icons/TextFields';
+
+// ------------------------------------------
+import "./styles.css"
+import {BsFileText} from "react-icons/bs"
+import {FcRightUp} from "react-icons/fc"
 
 
 const containerVariants = {
@@ -124,6 +148,17 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
   let {user} = useSelector((state)=> ({...state}));
   const [loading, setLoading] = useState(false)
   const [open1, setOpen1] = React.useState(false);
+  const [questionType,setType] =useState("radio");
+  const [questionRequired,setRequired] =useState("true"); 
+  
+  useEffect(()=>{
+      var newQuestion = {questionText: "Question",answer:false,answerKey:"",questionType:"radio", options : [{optionText: "Option 1"}], open: true, required:false}
+
+         setQuestions([...questions, newQuestion])
+    
+  },[])
+
+
 
   const [profileUserData, setProfileUserData] = useState();
   var test = profileUserData?.username
@@ -159,8 +194,8 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
           setLoading(false)
           toast.success("Survey Form submitted successfully")})
         setQuestions([])
-        // setFormDescription("")
-        // setFormTitle("")
+        setFormDescription("")
+        setFormTitle("")
       }
   }
 
@@ -196,49 +231,71 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
     }
   }
 
-  function addMoreQuestionField(){
-      expandCloseAll(); //I AM GOD
-
-      setQuestions(questions=> [...questions, {questionText: "Question", options : [{optionText: "Option 1"}], open: true}]);
-  }
-
-  function copyQuestion(i){
-    let qs = [...questions]; 
-    expandCloseAll();
-    const myNewOptions = [];
-    qs[i].options.forEach(opn => {
-      if ((opn.optionImage !== undefined)||(opn.optionImage !=="")) {
-        var opn1new = {
-          optionText : opn.optionText,
-          optionImage: opn.optionImage
-        }
-      } else{
-        var opn1new = {
-          optionText : opn.optionText
-        }
+function addMoreQuestionField(){
+          expandCloseAll(); //I AM GOD
+    
+          setQuestions(questions=> [...questions, {questionText: "Question", questionType:"radio", options : [{optionText: "Option 1"}], open: true, required:false}]);
       }
-      myNewOptions.push(opn1new)
-    });
-    const qImage = qs[i].questionImage || "";
-    var newQuestion = {questionText: qs[i].questionText, questionImage : qImage ,options:myNewOptions, open: true}
-     setQuestions(questions=> [...questions, newQuestion]); 
-  }
 
-  const handleImagePopupOpen = () => {
-    setOpenUploadImagePop(true);
-  };
-
-
-  function uploadImage(i, j){
+      function addQuestionType(i,type){
+        let qs = [...questions];  
+        console.log(type)
+        qs[i].questionType = type;
+        
+        setQuestions(qs);
+        
+      }
     
-    setImageContextData({
-      question: i,
-      option: j
-    });
-    handleImagePopupOpen();
-    
-  }
+
+      function copyQuestion(i){
+        expandCloseAll()
+        let qs = [...questions]
+        var newQuestion = qs[i]
   
+        setQuestions([...questions, newQuestion])
+  
+      }
+      
+        function deleteQuestion(i){
+          let qs = [...questions]; 
+          if(questions.length > 1){
+            qs.splice(i, 1);
+          }
+          setQuestions(qs)
+        }
+        
+        function handleOptionValue(text,i, j){
+          var optionsOfQuestion = [...questions];
+          optionsOfQuestion[i].options[j].optionText = text;
+          //newMembersEmail[i]= email;
+          setQuestions(optionsOfQuestion);
+        }
+      
+        function handleQuestionValue(text, i){
+          var optionsOfQuestion = [...questions];
+          optionsOfQuestion[i].questionText = text;
+          setQuestions(optionsOfQuestion);
+        }
+      
+        function onDragEnd(result) {
+            if (!result.destination) {
+              return;
+            }
+            var itemgg = [...questions];
+            const itemF = reorder(
+              itemgg,
+              result.source.index,
+              result.destination.index
+            );
+            setQuestions(itemF);
+        }
+      
+        const reorder = (list, startIndex, endIndex) => {
+          const result = Array.from(list);
+          const [removed] = result.splice(startIndex, 1);
+          result.splice(endIndex, 0, removed);
+          return result;
+        };
 
   function updateImageLink(link, context){
     
@@ -253,49 +310,6 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
     }
     setQuestions(optionsOfQuestion);
   }
-
-  function deleteQuestion(i){
-    let qs = [...questions]; 
-    if(questions.length > 1){
-      qs.splice(i, 1);
-    }
-    setQuestions(qs)
-  }
-
-  function handleOptionValue(text,i, j){
-    var optionsOfQuestion = [...questions];
-    optionsOfQuestion[i].options[j].optionText = text;
-    //newMembersEmail[i]= email;
-      setQuestions(optionsOfQuestion);
-  }
-
-  function handleQuestionValue(text, i){
-    var optionsOfQuestion = [...questions];
-    optionsOfQuestion[i].questionText = text;
-      setQuestions(optionsOfQuestion);
-  }
-
- function onDragEnd(result) {
-  if (!result.destination) {
-    return;
-  }
-  var itemgg = [...questions];
-
-  const itemF = reorder(
-    itemgg,
-    result.source.index,
-    result.destination.index
-  );
-
-  setQuestions(itemF);
-  }
-
-  const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-  };
 
   function showAsQuestion(i){
     let qs = [...questions];  
@@ -313,6 +327,51 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
     //console.log(optionsOfQuestion);
     setQuestions(optionsOfQuestion)
   }
+
+  function setOptionAnswer(ans,qno){
+    var Questions = [...questions];
+
+      Questions[qno].answer = ans;
+    
+
+    setQuestions(Questions)
+    console.log(qno+" "+ans)
+  }
+
+  function setOptionPoints(points,qno){
+    var Questions = [...questions];
+
+      Questions[qno].points = points;
+    
+
+    setQuestions(Questions)
+    console.log(qno+" "+points)
+  }
+  function addAnswer(i){
+    var answerOfQuestion = [...questions];
+    
+      answerOfQuestion[i].answer= !answerOfQuestion[i].answer;
+    
+    setQuestions(answerOfQuestion)
+  }
+
+  function doneAnswer(i){
+    var answerOfQuestion = [...questions];
+    
+      answerOfQuestion[i].answer= !answerOfQuestion[i].answer;
+    
+    setQuestions(answerOfQuestion)
+  }
+
+  function requiredQuestion(i){
+    var requiredQuestion = [...questions];
+  
+      requiredQuestion[i].required =  ! requiredQuestion[i].required
+    
+    console.log( requiredQuestion[i].required+" "+i);
+    setQuestions(requiredQuestion)
+  }
+
 
   function removeOption(i, j){
     var optionsOfQuestion = [...questions];
@@ -344,175 +403,242 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
      setQuestions(qs);
   }
 
+
   function questionsUI(){
     return  questions.map((ques, i)=> (
       <Draggable key={i} draggableId={i + 'id'} index={i}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <div>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+ <div>
           <div style={{marginBottom: "15px"}}>
             <div style={{width:'100%', marginBottom: '-7px' }}>
               <DragIndicatorIcon style={{transform: "rotate(-90deg)", color:'#DAE0E2'}} fontSize="small"/>
             </div>
-          
-            <Accordion onChange={()=>{handleExpand(i)}} expanded={questions[i].open}>
-              <AccordionSummary            
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                elevation={1} style={{width:'100%'}}
-              >
-                { !questions[i].open ? (
-              <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '3px', paddingTop: '15px', paddingBottom: '15px'}}>
-                {/* <TextField id="standard-basic" label=" " value="Question" InputProps={{ disableUnderline: true }} />  */}
+
+<Accordion onChange={()=>{handleExpand(i)}} expanded={questions[i].open}>
+  <AccordionSummary            
+    aria-controls="panel1a-content"
+    id="panel1a-header"
+    elevation={1} style={{width:'100%'}}
+  >
+    { !questions[i].open ? (
+
+        
+<div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '3px', paddingTop: '15px', paddingBottom: '15px'}}>    
+    
+    <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px"}} >{i+1}.  {ques.questionText}</Typography>
+
+    
+    {ques.options.map((op, j)=>(
+     
+     <div key={j} >
+       <div style={{display: 'flex',}}>
+        <FormControlLabel style={{marginLeft:"5px",marginBottom:"5px"}} disabled control={<input type={ques.questionType} color="primary" style={{marginRight: '3px', }} required={ques.type}/>} label={
+            <Typography style={{fontFamily:' Roboto,Arial,sans-serif',
+                fontSize:' 13px',
+                fontWeight: '400',
+                letterSpacing: '.2px',
+                lineHeight: '20px',
+                color: '#202124'}}>
+              {ques.options[j].optionText}
+            </Typography>
+          } />
+       </div>
+
+     
+     </div>
+
+         
+
+    ))}  
+  </div>            
+  ): ""}   
+  </AccordionSummary>
+      <div className="question_boxes">
+      {!ques.answer ? (<AccordionDetails className="add_question" >
+         
+        <div >
+            <div className="add_question_top">
+                {i+1}<input type="text" className="question" placeholder={`Question`}    value={ques.questionText} onChange={(e)=>{handleQuestionValue(e.target.value, i)}}></input>
                 
-                <Typography variant="subtitle1" style={{marginLeft: '0px'}}>{i+1}.  {ques.questionText}</Typography>
+                <Select className="select"  style={{color:"#5f6368",fontSize:"13px"}} >
+ 
+                    <MenuItem id="text" value="Text" onClick= {()=>{addQuestionType(i,"text")}}> <SubjectIcon style={{marginRight:"10px"}} />  Paragraph</MenuItem>
+                     <MenuItem id="checkbox"  value="Checkbox" onClick= {()=>{addQuestionType(i,"checkbox")}}><CheckBoxIcon style={{marginRight:"10px" ,color:"#70757a"}} checked /> Checkboxes</MenuItem>
+                    <MenuItem id="radio" value="Radio" onClick= {()=>{addQuestionType(i,"radio")}}> <Radio style={{marginRight:"10px",color:"#70757a"}} checked/> Multiple Choice</MenuItem>
 
 
-                {ques.questionImage !==""?(
-                  <div>
-                    <img src={ques.questionImage} width="400px" height="auto" /><br></br><br></br>
-                  </div>
-                ): "" }
-                
-                {ques.options.map((op, j)=>(
-                 
-                 <div key={j}>
-                   <div style={{display: 'flex'}}>
-                    <FormControlLabel disabled control={<Radio style={{marginRight: '3px', }} />} label={
-                        <Typography style={{color: '#555555'}}>
-                          {ques.options[j].optionText}
-                        </Typography>
-                      } />
-                   </div>
+                </Select>
+                    
+                        
+            </div>
+    
+    
+
+ 
 
 
-                 </div>
-                ))}  
-              </div>            
-              ): ""}   
-              </AccordionSummary>
+            {ques.options.map((op, j)=>(
+                <div className="add_question_body" key={j}>
+                    {/* <Checkbox  color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} disabled/> */}
+                    {
+                        (ques.questionType!="text") ? 
+                        <input type={ques.questionType}  style={{marginRight:"10px"}}/> :
+                        <ShortTextIcon  style={{marginRight:"10px"}} />
 
-              <AccordionDetails>
-              <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '15px', marginTop:'-15px'}}>
-                <div style={{display:'flex', width: '100%', justifyContent: 'space-between'}}>
-                  <Typography style={{marginTop:'20px'}}>{i+1}.</Typography>
-                  <TextField 
-                        fullWidth={true} 
-                        placeholder="Question Text" 
-                        style={{marginBottom: '18px'}}  
-                        rows={2}
-                        rowsMax={20}
-                        multiline={true}
+                    }
 
-                        value={ques.questionText}
-                        variant="filled"
-                      onChange={(e)=>{handleQuestionValue(e.target.value, i)}}
-                  />
+                    
+                    <div >
+                    <TextField 
+  fullWidth={true} 
+  placeholder="Option text" 
+  style={{marginTop: '5px'}} 
+  value={ques.options[j].optionText}
+  onChange={(e)=>{handleOptionValue(e.target.value, i, j)}}
+/>                    </div>
 
-                </div>
 
-                <div>
-
-                </div>
-                
-                <div style={{width: '100%'}}>
-                {ques.options.map((op, j)=>(
-                 
-                 <div key={j}>
-                      <div  style={{display:'flex', flexDirection:'row', marginLeft:'-12.5px', justifyContent: 'space-between', paddingTop: '5px', paddingBottom: '5px'}}>
-
-                          <Radio disabled /> 
-                          <TextField 
-                            fullWidth={true} 
-                            placeholder="Option text" 
-                            style={{marginTop: '5px'}} 
-                            value={ques.options[j].optionText}
-                            onChange={(e)=>{handleOptionValue(e.target.value, i, j)}}
-                          />
-
-                          {/* <IconButton aria-label="upload image" onClick={()=>{uploadImage(i, j)}}>
-                            <CropOriginalIcon />
-                          </IconButton> */}
-
-                          <IconButton aria-label="delete" onClick={()=>{removeOption(i, j)}}>
+                    <IconButton aria-label="delete" onClick={()=>{removeOption(i, j)}}>
                             <CloseIcon />
-                          </IconButton>
-                          </div>
-
-                          <div>
-                          {
-                            checkImageHereOrNotForOption(op.optionImage) ? (
-                            <div>
-                              <div style={{width:'150px', display: 'flex', alignItems:'flex-start', paddingLeft:'20px'}}>
-                                <img src={op.optionImage} width="90px" height="auto"/>
-                                
-                                <IconButton style={{marginLeft: '-15px', marginTop: '-15px',zIndex:999, backgroundColor: 'lightgrey', color:'grey'}}
-                                            size="small"
-                                            onClick={()=>{
-                                              updateImageLink("", {question: i, option: j})
-                                            }}
-                                            >
-                                  <CloseIcon />
-                                </IconButton>
-                              </div>
-                              <br></br>
-                              <br></br>  
-                            </div>
-                            ): ""
-                          }
-                          </div>
-                 </div>
-                ))}  
-                </div>  
-                
-                
+                    </IconButton>
+                </div>   
+            ))}  
+        
+    
+    
                 {ques.options.length < 5 ? (
-                  <div>
-                  <FormControlLabel disabled control={<Radio />} label={
-                    <Button size="small" onClick={()=>{addOption(i)}} style={{textTransform: 'none', marginLeft:"-5px"}}>
-                      Add Option
-                    </Button>
-                  } /> 
-                  </div>
+                <div className="add_question_body">
+                <FormControlLabel disabled control={ 
+                
+                (ques.questionType!="text") ? 
+                <input type={ques.questionType}  color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }} style={{marginLeft:"10px",marginRight:"10px"}} disabled/> :
+                <ShortTextIcon style={{marginRight:"10px"}} />
+
+                } label={
+                <div>
+                    <input type="text" className="text_input" style={{fontSize:"13px",width:"60px"}} placeholder="Add other"></input>
+                    <Button size="small" onClick={()=>{addOption(i)}} style={{textTransform: 'none',color:"#4285f4",fontSize:"13px",fontWeight:"600"}}>Add Option</Button>
+                </div>
+                } /> 
+                </div>
+
                 ): ""}
-
-                <br></br>
-                <br></br>
-
-                <Typography variant="body2" style={{color: 'grey'}}>You can add maximum 5 options. If you want to add more then change in settings. Multiple choice single option is availible</Typography>
+               <div className="add_footer">
+               <div className="add_question_bottom_left">
+        
+               <Button size="small"  onClick={()=>{addAnswer(i)}} style={{textTransform: 'none',color:"#4285f4",fontSize:"13px",fontWeight:"600"}}>       <FcRightUp style={{border:"2px solid #4285f4", padding:"2px",marginRight:"8px"}} /> Answer key</Button>
+                 
               </div>
-              </AccordionDetails>
 
-              <Divider />
-              
-              <AccordionActions>               
-                    <IconButton aria-label="View" onClick={()=>{showAsQuestion(i)}}>
+                <div className="add_question_bottom">
+                <IconButton aria-label="View" onClick={()=>{showAsQuestion(i)}}>
                       <VisibilityIcon />
                     </IconButton>
-
+                  
                     <IconButton aria-label="Copy" onClick={()=>{copyQuestion(i)}}>
-                      <FilterNoneIcon />
+                        <FilterNoneIcon/>
                     </IconButton>
-                    <Divider orientation="vertical" flexItem/>
-
+                    
                     <IconButton aria-label="delete" onClick={()=>{deleteQuestion(i)}}>
-                      <DeleteOutlineIcon />
+                        <BsTrash />
                     </IconButton>
+                        <span style={{color:"#5f6368",fontSize:"13px"}}>Required </span> <Switch name="checkedA" color="primary" checked={ques.required} onClick={()=>{requiredQuestion(i)}}/>
+                    <IconButton>
+                        <MoreVertIcon />
+                    </IconButton>
+                </div>
+              </div>
+            </div>
+            
+    </AccordionDetails>):(
 
-                    <IconButton aria-label="Image">
-                      <MoreVertIcon />
-                    </IconButton>
-              </AccordionActions>
-            </Accordion>
-          </div>
-      </div>
-                    </div>
-                  )}
-      </Draggable>
+<AccordionDetails className="add_question" >
+         <div className="top_header">
+              Choose Correct Answer
+         </div>
+<div >
+<div className="add_question_top">
+<input type="text" className="question " placeholder="Question"    value={ques.questionText} onChange={(e)=>{handleQuestionValue(e.target.value, i)}} disabled/>
+<input type="number" className="points" min="0" step="1" placeholder="0" onChange={(e)=>{setOptionPoints(e.target.value, i)}} />
+
+
+</div>
+
+
+
+
+{ques.options.map((op, j)=>(
+<div className="add_question_body" key={j} style={{marginLeft:"8px",marginBottom:"10px",marginTop:"5px"}}>
+
+<div key={j}>
+                  <div style={{display: 'flex'}} className="">
+                  <div className="form-check">
+                    <label style={{fontSize:"13px"}} onClick={()=>{setOptionAnswer(ques.options[j].optionText, i)}}>
+
+                    {(ques.questionType!="text") ? 
+                         <input
+                         type={ques.questionType}
+                         name={ques.questionText}
+                         
+                         value="option3"
+                         className="form-check-input"
+                         required={ques.required}
+                         style={{marginRight:"10px",marginBottom:"10px",marginTop:"5px"}}
+                       />:
+                        <ShortTextIcon style={{marginRight:"10px"}} />
+}
+                     
+                  {ques.options[j].optionText}
+                    </label>
+                  </div>
+                  </div>
+                </div>
+
+</div>   
+))}  
+
+
+
+<div className="add_question_body">
+
+
+<Button size="small"  style={{textTransform: 'none',color:"#4285f4",fontSize:"13px",fontWeight:"600"}}> <BsFileText style={{fontSize:"20px",marginRight:"8px"}}/>Add Answer Feedback</Button>
+
+
+</div>
+
+
+
+
+<div className="add_question_bottom">
+
+<Button variant="outlined" color="primary"  style={{textTransform: 'none',color:"#4285f4",fontSize:"12px",marginTop:"12px",fontWeight:"600"}} onClick={()=>{doneAnswer(i)}}>
+        Done
+      </Button>
+
+</div>
+</div>
+
+</AccordionDetails>
+
+
+       
+    )}
+
+    </div>
+            
+</Accordion>
+
+</div>
+</div>
+        </div>
+      )}
+</Draggable>
       
      )
     )
