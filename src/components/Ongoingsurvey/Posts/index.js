@@ -312,7 +312,7 @@ dividers>
         >
           <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
   
-          <span style={{color:"#45CBB2"}}>MODAL FORM</span>
+          <span style={{color:"#45CBB2"}}>RESPOND FORM</span>
           </BootstrapDialogTitle>
           <DialogContent           style={{height: 800 }}
  dividers>
@@ -430,14 +430,22 @@ dividers>
           <div >
    
    <div   class="form-check">
-     
-            <TextField
+   <TextField
+          id="filled-textarea"
+          label="Answer"
+          placeholder= "Answer"
+          multiline
+          maxRows={2}
+          onChange={(type) => addMoreQuestionField(item.questionText, subRowData.optionText)}  
+          variant="filled"
+          style={{width: "100%"}}
+        />
+            {/* <TextField
             id="outlined-textarea"
             label="Answer"
             placeholder= "Answer"
             style={{width: "100%"}}
-            onChange={(type) => addMoreQuestionField(item.questionText, subRowData.optionText)}  
-          />
+          /> */}
 
 
   </div>
@@ -464,7 +472,7 @@ dividers>
           </DialogContent>
           <DialogActions style={{flexDirection: "column"}}>
           <Typography gutterBottom style={{marginTop:20}}>
-            <i style={{fontWeight:"600"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
+            <i style={{fontWeight:"600",color:"#45CBB2"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
             </Typography>
             <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={responseReturn}>
               Respond
