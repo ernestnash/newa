@@ -91,14 +91,16 @@ const [answers, setAnswer] = React.useState({})
   const [lng, setLng] = useState(null);
   const [status, setStatus] = useState(null);
   const [surveyChecked, setSurveyChecked] = useState("");
+  const [surveyChecked1, setSurveyChecked1] = useState("");
   const [loading, setLoading] = useState(false)
   
   // const [valueChecked, setSurveyChecked] = useState(false);
 
  
-  const addMoreQuestionField = (quiz,answer,type) =>{ 
+  const addMoreQuestionField = (quiz,answer) =>{ 
     setSurveyChecked(answer)
-    setQuestions(questions=> [...questions, {questionText: quiz,type, options : [{optionText: answer}], open: true}]);
+    setSurveyChecked1(answer)
+    setQuestions(questions=> [...questions, {questionText: quiz, options : [{optionText: answer}], open: true}]);
   }
 
     useEffect(() => {
@@ -310,13 +312,13 @@ dividers>
         >
           <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
   
-          MODAL FORM
+          <span style={{color:"#45CBB2"}}>MODAL FORM</span>
           </BootstrapDialogTitle>
           <DialogContent           style={{height: 800 }}
  dividers>
           <Typography gutterBottom>
           
-          <Grid style={{borderTop: '10px solid teal', borderRadius: 10,marginTop:0}}
+          <Grid style={{borderTop: '10px solid #45CBB2', borderRadius: 10,marginTop:0}}
   
   >
       <div>
@@ -342,7 +344,10 @@ dividers>
   
   {questions.map((item,i) =>
   <div key={i}>
-      
+    {item.required === true &&(
+      <span style={{color: "red"}}>✱</span>
+    )}
+            
       <Typography gutterBottom>
             <TextField
             id="outlined-textarea"
@@ -359,15 +364,46 @@ dividers>
       
       (typeof(item.options) == 'object') ?
       <ul>
+        {item.questionType === "radio" &&(
+          <>
+          {
+          item.options.map((subRowData1,k) =>
+          <div >
+   
+   <div   class="form-check">
+     
+    <input class="form-check-input"  type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+            onClick={(type) => addMoreQuestionField(item.questionText, subRowData1.optionText)}  
+            checked={surveyChecked === subRowData1.optionText ? true : false}
+      //  onChange={(e) => setQuestions(e.target.value)}
+  
+             name="flexRadioDefault" 
+            id="flexRadioDefault1"/>
+  
+    <label class="form-check-label" for="flexRadioDefault1">
+      {subRowData1.optionText}
+    </label>
+  </div>
+  
+  
+  
+          </div>
+          )
+     
+          }
+          </>
+        )}
+               {item.questionType === "checkbox" &&(
+          <>
           {
           item.options.map((subRowData,k) =>
           <div >
    
    <div   class="form-check">
      
-    <input class="form-check-input"  type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-            onClick={(type) => addMoreQuestionField(item.questionText, subRowData.optionText,type= "optionRadio")}  
-            checked={surveyChecked === subRowData.optionText ? true : false}
+    <input class="form-check-input"  type="checkbox" name="flexRadioDefault" id="flexRadioDefault1"
+            onClick={(type) => addMoreQuestionField(item.questionText, subRowData.optionText)}  
+            checked={surveyChecked1 === subRowData.optionText ? true : false}
       //  onChange={(e) => setQuestions(e.target.value)}
   
              name="flexRadioDefault" 
@@ -384,6 +420,36 @@ dividers>
           )
      
           }
+          </>
+        )}  
+
+                       {item.questionType === "text" &&(
+          <>
+          {
+          item.options.map((subRowData,k) =>
+          <div >
+   
+   <div   class="form-check">
+     
+            <TextField
+            id="outlined-textarea"
+            label="Answer"
+            placeholder= "Answer"
+            style={{width: "100%"}}
+            onChange={(type) => addMoreQuestionField(item.questionText, subRowData.optionText)}  
+          />
+
+
+  </div>
+  
+  
+  
+          </div>
+          )
+     
+          }
+          </>
+        )}    
       </ul>   
       :
       null
@@ -400,7 +466,7 @@ dividers>
           <Typography gutterBottom style={{marginTop:20}}>
             <i style={{fontWeight:"600"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
             </Typography>
-            <Button style={{fontWeight:"600",marginTop:0}} autoFocus onClick={responseReturn}>
+            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={responseReturn}>
               Respond
             </Button>
           </DialogActions>
