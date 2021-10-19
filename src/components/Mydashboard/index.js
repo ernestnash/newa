@@ -91,12 +91,6 @@ function Mydashboard({history}) {
       </Button>
                </div>
 
-{/* {surveys === "surveys" || surveys === "" ?(
-     <Mysurveys style={{marginTop:15}} uid={`${auth?.currentUser?.uid}`}/>
-
-):(
-    <Charts />
-)} */}
 {showSurveys1 ?(
     <Mysurveys style={{marginTop:15}} uid={`${auth?.currentUser?.uid}`}/>
 ): showDashboard1 ?(
