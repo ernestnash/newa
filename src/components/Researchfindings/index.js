@@ -43,7 +43,7 @@ function Ongoingsurvey({history}) {
                 <div style={{textAlign: "center",fontSize:30,fontWeight:"600"}}><span>RESEARCH FINDINGS</span></div>
                 <div style={{marginBottom:5}} class="search-box">
     <button class="btn-search"><i class="fas fa-search"></i></button>
-    <input type="text" class="input-search" placeholder="Search survey..."/>
+    <input type="text" onChange={(e) => setInput(e.target.value)} class="input-search" placeholder="Search survey..."/>
   </div>
                 <div style={{marginTop:10}}>
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -64,24 +64,30 @@ function Ongoingsurvey({history}) {
         </TableHead>
         <TableBody>
 
-        {
-    posts.map(({ id, post }) => (
-        < Posts 
-        key={id} 
-        postId={id} 
-        ownerEmail={post.ownerEmail} 
-        ownerId={post.ownerId} 
-        ownerUsername={post.ownerUsername}
-        questions={post.questions} 
-        timestamp={post.timestamp}        
-        formDescription={post.formDescription}
-        formTitle={post.formTitle}
-        read={post.read}
- 
-        />
-
-    ))
-}
+        {input === ""  ?(
+        
+        posts.map(({ id, post }) => (
+            < Posts 
+            key={id} 
+            postId={id} 
+            ownerEmail={post.ownerEmail} 
+            ownerId={post.ownerId} 
+            ownerUsername={post.ownerUsername}
+            questions={post.questions} 
+            timestamp={post.timestamp}        
+            formDescription={post.formDescription}
+            formTitle={post.formTitle}
+            read={post.read}
+     
+            />
+    
+        ))
+    
+):(
+<>
+<span>No such results</span>
+</>
+)}
 
         </TableBody>
       </Table>
