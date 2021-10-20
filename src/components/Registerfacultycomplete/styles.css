@@ -1,0 +1,98 @@
+.center2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  height: 300px;
+  }
+
+  .main_body{
+    background-color: #DEDEDE;
+  }
+
+  .main_body{
+    height: 800px;
+
+
+    background: 
+      url("https://www.macmillandictionary.com/external/slideshow/full/White_full.png");
+    background-size: cover;
+}
+
+.parent {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.child:nth-child(2) {
+  flex-grow: 1;
+}
+  
+/* --------- Non-flexbox related styles --------- */
+.parent > div {
+  margin: 1% 2%;
+  padding: 15px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.parent > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.circle {
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: solid 1px #2E2EFF;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+
+
+.hr-theme-slash-2 {
+  display: flex;
+}
+ .hr-theme-slash-2 .hr-line {
+    width: 100%;
+    position: relative;
+    margin: 1px;
+    border-bottom: 1px solid #2E2EFF;
+  }
+  .hr-theme-slash-2 .hr-icon {
+    position: relative;
+    top: 3px;
+    color: #2E2EFF;
+  }
+
+  @media(max-width:991px) {
+.socialDiv{
+  margin-top: 10px;
+  
+}
+.socialDiv1{
+  margin-top: 15px;
+  
+}
+
+  }
+  
+  @media(min-width:991px) {
+    .socialDiv{
+
+      display: flex;
+      margin-top: 15px;
+      justify-content: space-between;
+      
+    }
+    .socialDiv1{
+      cursor: pointer;;
+      
+    }
+
+  }

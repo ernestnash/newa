@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function RegisterInstitutioncomplete({history}) {
+function Registerfacultycomplete({history}) {
 //props.history
 
     
@@ -50,7 +50,7 @@ if(user !== null){
                 if(result.user.emailVerified){
                     //remove user email from localstaorage
                     //get user id token
-                    window.localStorage.removeItem("institutionEmailForRegistration");
+                    window.localStorage.removeItem("studentEmailForRegistration");
                     let user = auth.currentUser
                     await user.updatePassword(password);
                     const idTokenResult = await user.getIdTokenResult();
@@ -158,4 +158,4 @@ if(user !== null){
     )
 }
 
-export default RegisterInstitutioncomplete
+export default Registerfacultycomplete
