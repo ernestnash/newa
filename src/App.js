@@ -11,7 +11,7 @@ import Registerindividual from './components/Registerindividual';
 import Ongoingsurvey from './components/Ongoingsurvey';
 import Researchfindings from './components/Researchfindings';
 import Recommendedbooks from './components/Recommendedbooks';
-import Mydashboard from './components/Mydashboard';
+import Mydashboard1 from './components/Mydashboard';
 import Registerstudentcomplete from './components/Registerstudentcomplete';
 import RegisterInstitutioncomplete from './components/RegisterInstitutioncomplete';
 import Box from '@mui/material/Box';
@@ -116,7 +116,7 @@ function App() {
           <Route exact path="/ongoingsurveys" component={Ongoingsurvey}/>
           <Route exact path="/researchfindings" component={Researchfindings}/>
           <Route exact path="/recommendedbooks" component={Recommendedbooks}/>
-          <Route exact path="/mydashboard" component={Mydashboard}/>
+          <Route exact path="/mydashboard" component={Mydashboard1}/>
           <Route exact path="/registerstudent/complete" component={Registerstudentcomplete}/>
           <Route exact path="/surveys/replies/:postId" component={Surveyreply}/>
 

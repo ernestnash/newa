@@ -462,17 +462,22 @@ function addMoreQuestionField(){
       {!ques.answer ? (<AccordionDetails className="add_question" >
          
         <div >
-            <div className="add_question_top">
-                {i+1}<input type="text" className="question" placeholder={`Question`}    value={ques.questionText} onChange={(e)=>{handleQuestionValue(e.target.value, i)}}></input>
-                
+            <div style={{display: 'flex',alignItems: "center",flexWrap:"wrap"}} className="add_question_top">
+              <div>
+              {i+1}<input type="text" className="question" placeholder={`Question`}    value={ques.questionText} onChange={(e)=>{handleQuestionValue(e.target.value, i)}}></input>
+
+                </div>
+                <div>
                 <Select className="select"  style={{color:"#5f6368",fontSize:"13px"}} >
  
-                    <MenuItem id="text" value="Text" onClick= {()=>{addQuestionType(i,"text")}}> <SubjectIcon style={{marginRight:"10px"}} />  Paragraph</MenuItem>
-                     <MenuItem id="checkbox"  value="Checkbox" onClick= {()=>{addQuestionType(i,"checkbox")}}><CheckBoxIcon style={{marginRight:"10px" ,color:"#70757a"}} checked /> Checkboxes</MenuItem>
-                    <MenuItem id="radio" value="Radio" onClick= {()=>{addQuestionType(i,"radio")}}> <Radio style={{marginRight:"10px",color:"#70757a"}} checked/> Multiple Choice</MenuItem>
+ <MenuItem id="text" value="Text" onClick= {()=>{addQuestionType(i,"text")}}> <SubjectIcon style={{marginRight:"10px"}} />  Paragraph</MenuItem>
+  <MenuItem id="checkbox"  value="Checkbox" onClick= {()=>{addQuestionType(i,"checkbox")}}><CheckBoxIcon style={{marginRight:"10px" ,color:"#70757a"}} checked /> Checkboxes</MenuItem>
+ <MenuItem id="radio" value="Radio" onClick= {()=>{addQuestionType(i,"radio")}}> <Radio style={{marginRight:"10px",color:"#70757a"}} checked/> Multiple Choice</MenuItem>
 
 
-                </Select>
+</Select>
+                </div>
+
                     
                         
             </div>
@@ -495,7 +500,6 @@ function addMoreQuestionField(){
                                         <input type="text" className="text_input" placeholder="option"  value={ques.options[j].optionText}onChange={(e)=>{handleOptionValue(e.target.value, i, j)}}></input>
                                     </div>
 
-                                    <CropOriginalIcon style={{color:"#5f6368"}}/>
 
                                     <IconButton aria-label="delete" onClick={()=>{removeOption(i, j)}}>
                                             <CloseIcon />
@@ -522,7 +526,7 @@ function addMoreQuestionField(){
                 </div>
 
                 ): ""}
-               <div className="add_footer">
+               <div className="">
                <div className="add_question_bottom_left">
         
                <Button size="small"  onClick={()=>{addAnswer(i)}} style={{textTransform: 'none',color:"#4285f4",fontSize:"13px",fontWeight:"600"}}>       <FcRightUp style={{border:"2px solid #4285f4", padding:"2px",marginRight:"8px"}} /> Answer key</Button>
