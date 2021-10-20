@@ -25,12 +25,14 @@
   background-color: transparent;
   padding-right: 40px;
   color:#fff;
+  
 }
 .input-search::placeholder{
   color:#fff;
   font-size: 18px;
   letter-spacing: 0px;
   font-weight: 100;
+  
 }
 .btn-search{
   width: 50px;
@@ -43,8 +45,8 @@
   border-radius: 50%;
   position: absolute;
   right: 0px;
-  color:#45CBB2 ;
-  background-color: #fff;
+  color:#fff ;
+  background-color: #45CBB2;
   pointer-events: painted;  
 }
 
