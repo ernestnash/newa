@@ -88,7 +88,7 @@ function Ongoingsurvey({history}) {
         </TableHead>
         <TableBody>
 
-        {input === ""  ?(
+        {searchTerm === ""  ?(
         
         posts.map(({ id, post }) => (
             < Posts 
@@ -107,27 +107,30 @@ function Ongoingsurvey({history}) {
     
         ))
     
-):(
-<>
+): searchTerm === searchTerm ?(
+
+
+
 <div style={{}} className="dropdown-content3">
-          <ul id="list">
-            {
-              posts !== undefined ? (
-                filteredPosts.map((posts2) => (
-                  <li>
-                      <h3 className="searchH3">{posts2.formTitle} </h3>
-                  </li>
-                ))
-              ):
-              (
-                  <h3>No such results1</h3>
-              )
+        <ul id="list">
+          {
+              filteredPosts.map((posts2) => (
+
+
+                <li>
+                    <span className="">{posts2.formTitle} </span>
+                </li>
+              ))
             
-            }
-          </ul>
-        </div>
-</>
+          
+          }
+        </ul>
+      </div> 
+
+):(
+<span>No such results</span>
 )}
+
 
         </TableBody>
       </Table>

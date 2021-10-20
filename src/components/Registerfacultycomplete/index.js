@@ -35,7 +35,7 @@ if(user !== null){
     const [email, setStudenEmail] = useState('')
 
     useEffect(()=>{
-        setStudenEmail(window.localStorage.getItem("institutionEmailForRegistration"));
+        setStudenEmail(window.localStorage.getItem("facultyEmailForRegistration"));
     }, [])
 
     const onSubmit = async(data)=>{
@@ -50,7 +50,7 @@ if(user !== null){
                 if(result.user.emailVerified){
                     //remove user email from localstaorage
                     //get user id token
-                    window.localStorage.removeItem("studentEmailForRegistration");
+                    window.localStorage.removeItem("facultyEmailForRegistration");
                     let user = auth.currentUser
                     await user.updatePassword(password);
                     const idTokenResult = await user.getIdTokenResult();
@@ -68,7 +68,7 @@ if(user !== null){
                         read: true,
                         location:"",
                         bio:"",
-                        type:"institutionEmail",
+                        type:"facultyEmail",
                         timestamp: Date.now()
                     })   
                     //redirect
@@ -101,7 +101,7 @@ if(user !== null){
 <div class="parent">
   <div class="child"><div class="center2">
 
-      <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Complete registration as an institution</span></div>
+      <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Complete registration as a faculty</span></div>
       <div></div> 
       <div className="form-group">
               {/* <label className="col-form-label">E mail </label> */}
