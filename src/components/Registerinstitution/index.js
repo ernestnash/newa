@@ -7,6 +7,13 @@ import "react-toastify/dist/ReactToastify.css"
 import { auth,db } from '../firebase'
 import {  googleProvider,facebookProvider,GithubProvider, TwitterProvider } from '../firebase';
 import { useSelector,useDispatch } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useForm } from "react-hook-form";
+import validator from 'validator'
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import * as yup from "yup";
+import { Formik } from "formik";
 
 
 
@@ -16,40 +23,51 @@ function Registerinstitution({history}) {
     const [email, setInstitutionEmail] = useState('')
     let {user} = useSelector((state)=> ({...state}));
     let dispatch = useDispatch();
+    const [loading,setLoading] = useState(false)
 
+
+
+
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+      reset,
+      trigger,
+    } = useForm();
+    
     if(user !== null){
         history.push("/")
       }
 
-    const emailRegex = /\S+@\S+\.\S+/;
-
-    const verifyEmail = async(event)=>{
-        event.preventDefault();
-        let errors = {};
 
 
-        if(!email){
-            toast.error("Institution E mail field is empty!")
-        }else if (!emailRegex.test(email)) {
-            toast.error('Please enter a valid email!');
-          }
-        else{
+    const onSubmit = async(data)=>{
+     setLoading(true)
+
+   var email = data.email
+
             const config ={
                 url: 'https://simple-academic-survey.web.app/registerInstitution/complete',
                 handleCodeInApp: true
             }
     
-    
+
             await auth.sendSignInLinkToEmail(email,config)
-            toast.success(`Email sent to ${email}. Click the link to complete your registration.`
-            );
+                                        setLoading(false)
+            toast.success(`Email sent to ${email}. Click the link to complete your registration.`);
           //save user email in local storage
           window.localStorage.setItem('institutionEmailForRegistration', email)
         //clear state
-        setInstitutionEmail("");
-        }
-
+    reset()
     }
+    if(user !== null){
+        history.push("/")
+      }
+
+    // const emailRegex = /\S+@\S+\.\S+/;
+
+
 
 
 
@@ -221,12 +239,30 @@ function Registerinstitution({history}) {
 <div class="parent">
   <div class="child"><div class="center2">
       <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Register as an academic institution</span></div>
-      <div style={{marginBottom:15}}><input  style={{width: 250,height:35,border:"2px solid #45CBB2",textAlign: "center"}} value={email} type="email"
-      onChange={(e) => {
-        setInstitutionEmail(e.target.value)
-    }}
-      placeholder="Institution E mail"/></div>
-      <div><button onClick={verifyEmail} style={{backgroundColor: "#45CBB2",width:250,height:40,color: "#fff",fontSize:20,border: "none"}}>CREATE FREE ACCOUNT</button></div>
+      <div className="form-group">
+              {/* <label className="col-form-label">E mail </label> */}
+              <input
+              placeholder="Enter Instution E mail"
+                type="text"
+                className={`form-control ${errors.email && "invalid"}`}
+                {...register("email", { required: "Institution Email is Required" ,
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[ac.ke]{5,}$/i,
+                  message: "Invalid institution email address",
+                }})}
+                onKeyUp={() => {
+                  trigger("email");
+                }}
+              />
+              {errors.email && (
+                <small className="text-danger">{errors.email.message}</small>
+              )}
+            </div>
+
+           
+            <div><button onClick={handleSubmit(onSubmit)} style={{backgroundColor: "#45CBB2",width:250,height:40,color: "#fff",fontSize:20,border: "none"}}>
+        {loading ? <CircularProgress style={{height:25,width:25,color:"#fff"}}/> : <span>CREATE FREE ACCOUNT</span>}
+        </button></div>
       <div style={{marginTop:15,fontWeight:"600"}}><div class="hr-theme-slash-2"><div class="hr-line"></div><div class="hr-icon"><div class="circle"><span style={{color: "#000"}}>OR</span></div></div><div class="hr-line"></div></div></div>
       <div style={{marginTop:10,fontWeight:"600",fontSize:25}}>Create free account with</div>
       <div className="socialDiv">
