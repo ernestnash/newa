@@ -36,9 +36,10 @@ const Modal = () =>{
             <motion.div className="modal"
             variants={modal}
              >
-    <Box sx={{ display: 'flex' }}>
+    {/* <Box sx={{ display: 'flex' }}>
       <CircularProgress />
-    </Box>
+    </Box> */}
+    Hello
             </motion.div>
              </motion.div>
         </AnimatePresence>

@@ -38,7 +38,7 @@ import Header from './components/Header';
 import Surveyreply from './components/Surveyreply';
 import Registerfaculty from './components/Registerfaculty';
 import Registerfacultycomplete from "./components/RegisterInstitutioncomplete"
-
+import Thanks from "./components/Thanks"
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -123,7 +123,7 @@ function App() {
           <Route exact path="/registerfaculty/complete" component={Registerfacultycomplete}/>
 
           <Route exact path="/surveys/replies/:postId" component={Surveyreply}/>
-
+          <Route exact path="/survey/response/thanks" component={Thanks}/>
           
         </Switch>
 
