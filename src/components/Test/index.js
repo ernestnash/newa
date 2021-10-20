@@ -1,39 +1,54 @@
-import React,{useEffect,useState} from 'react'
-import { Button, Typography } from '@material-ui/core'
-
-import { useParams } from "react-router";
-import axios from "axios";
-import Modal from "../Modal"
+import React,{useState, useEffect} from 'react'
+import Header from '../Header'
 import "./styles.css"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { useSelector,useDispatch } from 'react-redux';
+import Posts from './Posts';
+import {auth,db} from './../firebase'
+import SearchBar from "material-ui-search-bar";
 
 
 function Test() {
-    // var {id} = useParams();
-    
-    // async function data(){
-    //    var request = await axios.get(`http://localhost:9000/data/${id}`)
-    //    console.log(request.data)
+  let {user} = useSelector((state)=> ({...state}));
+  const [posts, setPosts] = useState([]);
 
-    // }
+  useEffect(() => {
+    db.collection('surveys').where("active","==", true).orderBy("timestamp", "desc").onSnapshot(snapshot => {
+        setPosts(snapshot.docs.map(doc => ({
+            id: doc.id,
+            post: doc.data(),
+        })));
+    })
+}, []);
 
-    // data()
-
-    return (
-        <div className="submit">
-             <div className="user_form">
-            <div className="user_form_section">
-                <div className="user_title_section">
-                    <Typography style={{fontSize:"26px",fontFamily: "'Google Sans','Roboto','Arial','sans-serif'"}} >Thank you</Typography>
-                    <br></br>
-                    <Typography style={{fontSize:"13px",fontWeight:"400"}} >Your response has been recorded.</Typography>
-                    <br></br>
-<a href="#" style={{fontSize:"13px"}}></a>
-                </div>
-        </div>
-        </div>
-        </div>
-
-    )
+  return (
+    <div>
+      {
+                  posts.map(({ id, post }) => (
+                    < Posts 
+                    key={id} 
+                    postId={id} 
+                    ownerEmail={post.ownerEmail} 
+                    ownerId={post.ownerId} 
+                    ownerUsername={post.ownerUsername}
+                    questions={post.questions} 
+                    timestamp={post.timestamp}        
+                    doc_desc={post.formDescription}
+                    doc_name={post.formTitle}
+                    read={post.read}
+             
+                    />
+            
+                ))
+      }
+    </div>
+  )
 }
 
 export default Test

@@ -37,7 +37,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { produce } from "immer"
 import CircularProgress from '@mui/material/CircularProgress';
 import { toast, ToastContainer } from 'react-toastify'
-
+import { useHistory } from "react-router-dom"
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuDialogContent-root': {
@@ -77,31 +77,24 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-function Posts({ postId,  ownerEmail, ownerId, ownerUsername, questions, timestamp, formDescription, formTitle, read}) {
+function Posts({ postId,  ownerEmail, ownerId, ownerUsername, questions, timestamp, doc_desc, doc_name, read}) {
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
-    const [ans, setAns] = React.useState([])
-    const [reply, setReply] = useState([]);
+    var quest = [];
+    var post_answer = [];
+    var history = useHistory()
+  
+     var [answer,setAnswer] = useState([])
     let {user} = useSelector((state)=> ({...state}));
-  const [value, setValue] = React.useState('female');
-const [answers, setAnswer] = React.useState({})
-  const [questions1, setQuestions]= React.useState([]);
+
+
   const [numberOfSurvey, setNumberOfSurvey] = React.useState(0)
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [status, setStatus] = useState(null);
-  const [surveyChecked, setSurveyChecked] = useState("");
-  const [surveyChecked1, setSurveyChecked1] = useState("");
   const [loading, setLoading] = useState(false)
-  
-  // const [valueChecked, setSurveyChecked] = useState(false);
+  const [questionOption, setQuestionOption] = useState("")
 
- 
-  const addMoreQuestionField = (quiz,answer) =>{ 
-    setSurveyChecked(answer)
-    setSurveyChecked1(answer)
-    setQuestions(questions=> [...questions, {questionText: quiz, options : [{optionText: answer}], open: true}]);
-  }
 
     useEffect(() => {
       db.collection('surveys').doc(postId).collection("responses").where("reply","==", true)
@@ -112,20 +105,8 @@ const [answers, setAnswer] = React.useState({})
 
 
 
-function onRadio(questionId) {
-   return function(event) {
-         var tmpAns = answers;
-          tmpAns[questionId] = event.target.value;
-           setAnswer(tmpAns)
-    }
-}
-
-
-
-    
    const responseReturn = (event) => {
 
-    console.log("quesons ",questions1)
     event.preventDefault();
     let errors = {};
 
@@ -148,7 +129,7 @@ function onRadio(questionId) {
     }else{
 
     
-  if(questions1.length !== 0){
+  
     setLoading(true)
 
     db.collection('surveys').doc(postId).collection("responses").where("fromId", "==", auth.currentUser.uid).where("formId", "==",postId ).get().then(
@@ -163,7 +144,7 @@ function onRadio(questionId) {
               timestamp:  Date.now(),
               fromEmail: auth?.currentUser?.email,
               fromId:auth?.currentUser?.uid,
-              questions1: questions1,
+              // questions1: questions1,
                   read: false,
                   reply: true,
                   formId: postId,
@@ -178,49 +159,116 @@ function onRadio(questionId) {
         }
       }
     )
-  }
+  
   }
     
 }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
-      const handleClickOpen1 = () => {
-        setOpen1(true);
-      };
-      const handleClose = () => {
-        setOpen(false);
-      };
-    
-    
-      const handleClose1 = () => {
-        setOpen1(false);
-      };
-    
-    
-    
 
+function select(que,option){
+  // answer.map((ele)=>{
+  //     ele.question==que ? ele.answer = option : console.log(" ")
+  // })
 
+ var k =answer.findIndex((ele)=>(ele.question == que))
 
-      var d = timestamp;
-      //var d =val.timestamp;
-      
-      //NB: use + before variable name
-      var date = new Date(+d);
+ answer[k].answer=option
+  setAnswer(answer)
+  console.log(answer)
+}
 
-      for(let i = 0; i < questions.length; i++) {
+useEffect(()=>{
+questions.map((q)=>{
+  answer.push({
+    "question": q.questionText,
+    "answer" : " "
+  })
   
-        for(let j = 0; j < questions[i].length; j++) {
-          
-           console.log(questions[i][j]);
-        }
-     }
+})
+questions.map((q,qindex)=>{
+   quest.push(    {"header": q.questionText, "key": q.questionText })
+})
+console.log(answer)
 
-     const add = (reply,quiz) =>{
-     setReply(...[reply])
-     }
-      
+
+
+
+},[])
+
+ var  post_answer_data = {}
+
+ 
+
+ const onQuestionOptionChange = (e) => {
+   console.log("Text: ",e.target.value)
+   setQuestionOption(e.target.value)
+ }
+ function selectinput(que,option){
+  var k =answer.findIndex((ele)=>(ele.question == que))
+
+  answer[k].answer=option
+   setAnswer(answer)
+   console.log("Ans: ",answer)
+ }
+
+
+
+ function selectcheck(e,que,option){
+   var d =[]
+var k =answer.findIndex((ele)=>(ele.question == que))
+if(answer[k].answer){
+  d=answer[k].answer.split(",")
+
+}
+
+if(e == true){
+  d.push(option)
+}
+else{
+  var n=d.findIndex((el)=>(el.option == option))
+  d.splice(n,1)
+
+}
+
+ answer[k].answer=d.join(",")
+
+  setAnswer(answer)
+  console.log(answer)
+ }
+
+
+function submit(){
+answer.map((ele)=>{
+
+  post_answer_data[ele.question] = ele.answer
+ })
+
+
+// axios.post(`http://localhost:9000/student_response/${doc_name}`,{
+//     "column": quest,
+//     "answer_data" :[post_answer_data]
+// })
+
+// history.push(`/submitted`)
+}
+const handleClickOpen1 = () => {
+  setOpen1(true);
+};
+
+const handleClose1 = () => {
+  setOpen1(false);
+};
+
+
+
+
+
+
+var d = timestamp;
+//var d =val.timestamp;
+
+//NB: use + before variable name
+var date = new Date(+d)
 
      if(loading){
        return(
@@ -267,7 +315,7 @@ dividers>
                     </IconButton>
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {formTitle}
+                    {doc_name}
                   </TableCell>
                   <TableCell align="right">{numberOfSurvey}</TableCell>
   
@@ -316,157 +364,98 @@ dividers>
           </BootstrapDialogTitle>
           <DialogContent           style={{height: 800 }}
  dividers>
-          <Typography gutterBottom>
-          
-          <Grid style={{borderTop: '10px solid #45CBB2', borderRadius: 10,marginTop:0}}
-  
-  >
-      <div>
-          <div>
-            <Paper elevation={2} style={{width:'100%'}}>
-              <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '10px', paddingTop: '10px', paddingBottom: '30px'}}>
-                <Typography variant="h4" style={{fontFamily:'sans-serif Roboto', marginBottom:"15px"}}>
-                  {formTitle}
-                </Typography>
-                <Typography variant="subtitle1">
-                    {formDescription}
-                </Typography>
-              </div>
-            </Paper>
-          </div> 
-      </div>       
-  </Grid>  
-  
-          </Typography>
-    
-    <hr/>
-  
-  
-  {questions.map((item,i) =>
-  <div key={i}>
-    {item.required === true &&(
-      <span style={{color: "red"}}>✱</span>
-    )}
+         
+         <div className="submit">
+        <div className="user_form">
+            <div className="user_form_section1">
+                <div className="user_title_section">
+                    <Typography style={{fontSize:"26px"}} >{doc_name}</Typography>
+                    <Typography style={{fontSize:"15px"}} >{doc_desc}</Typography>
+
+                </div>
+              
+                {
+                questions.map((question,qindex)=>(
+                    <div className="user_form_questions">
+                    <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px",fontSize:"14px"}} >{qindex+1}.  {question.questionText}</Typography>
+                    {
+                            question.options.map((ques,index)=>(
+                              
+                              <div key={index} style={{marginBottom:"5px"}}>
+                                  <div style={{display: 'flex'}}>
+                                  <div className="form-check">
+                                    
+                                      {
+
+                                        question.questionType != "radio" ? (  
+                                          question.questionType != 'text' ? (
+                                        <label>
+                                        <input
+                                        
+                                        type={question.questionType}
+                                        name={qindex}
+                                        value= {ques.optionText}
+                                        className="form-check-input"
+                                        required={question.required}
+                                        style={{margnLeft:"5px",marginRight:"5px"}}
+                                        onChange={(e)=>{selectcheck(e.target.checked,question.questionText,ques.optionText)}}
+                                        /> {ques.optionText}
+                                        </label>): (
+
+                                        <label>
+
+
+                                        <input
+
+                                        type={question.questionType}
+                                        name={qindex}
+                                        value= {ques.optionText}
+                                        className="form-check-input"
+                                        required={question.required}
+                                        style={{margnLeft:"5px",marginRight:"5px"}}
+                                        onChange={(e)=>{selectinput(question.questionText,e.target.value)}}
+                                        /> 
+                                        {ques.optionText}
+
+
+                                        </label>
+                                        )
+                                        
+                                        )
+                                        
+                                        :(  <label>
+                                          <input
+                                            
+                                            type={question.questionType}
+                                            name={qindex}
+                                            value= {ques.optionText}
+                                            className="form-check-input"
+                                            required={question.required}
+                                            style={{margnLeft:"5px",marginRight:"5px"}}
+                                            onChange={()=>{select(question.questionText,ques.optionText)}}
+                                          />
+                                      {ques.optionText}
+                                        </label>)
+
+                                      }
+                                  
+                                  </div>
+                                  </div>
+                                </div>
+                            ))
+                    }
+                    </div>
+                ))
+                
+                }         
+                 
+ 
+       
+
+            </div>
             
-      <Typography gutterBottom>
-            <TextField
-            id="outlined-textarea"
-            defaultValue= {item.questionText}
-            label={`Question ${i+1}`}
-            InputProps={{
-              readOnly: true,
-            }}
-            style={{width: "100%"}}
-          />
-  
-            </Typography>
-      {
-      
-      (typeof(item.options) == 'object') ?
-      <ul>
-        {item.questionType === "radio" &&(
-          <>
-          {
-          item.options.map((subRowData1,k) =>
-          <div >
-   
-   <div   class="form-check">
-     
-    <input class="form-check-input"  type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-            onClick={(type) => addMoreQuestionField(item.questionText, subRowData1.optionText)}  
-            checked={surveyChecked === subRowData1.optionText ? true : false}
-      //  onChange={(e) => setQuestions(e.target.value)}
-  
-             name="flexRadioDefault" 
-            id="flexRadioDefault1"/>
-  
-    <label class="form-check-label" for="flexRadioDefault1">
-      {subRowData1.optionText}
-    </label>
-  </div>
-  
-  
-  
-          </div>
-          )
-     
-          }
-          </>
-        )}
-               {item.questionType === "checkbox" &&(
-          <>
-          {
-          item.options.map((subRowData,k) =>
-          <div >
-   
-   <div   class="form-check">
-     
-    <input class="form-check-input"  type="checkbox" name="flexRadioDefault" id="flexRadioDefault1"
-            onClick={(type) => addMoreQuestionField(item.questionText, subRowData.optionText)}  
-            checked={surveyChecked1 === subRowData.optionText ? true : false}
-      //  onChange={(e) => setQuestions(e.target.value)}
-  
-             name="flexRadioDefault" 
-            id="flexRadioDefault1"/>
-  
-    <label class="form-check-label" for="flexRadioDefault1">
-      {subRowData.optionText}
-    </label>
-  </div>
-  
-  
-  
-          </div>
-          )
-     
-          }
-          </>
-        )}  
-
-                       {item.questionType === "text" &&(
-          <>
-          {
-          item.options.map((subRowData,k) =>
-          <div >
-   
-   <div   class="form-check">
-   <TextField
-          id="filled-textarea"
-          label="Answer"
-          placeholder= "Answer"
-          multiline
-          maxRows={2}
-          onChange={(type) => addMoreQuestionField(item.questionText, subRowData.optionText)}  
-          variant="filled"
-          style={{width: "100%"}}
-        />
-            {/* <TextField
-            id="outlined-textarea"
-            label="Answer"
-            placeholder= "Answer"
-            style={{width: "100%"}}
-          /> */}
-
-
-  </div>
-  
-  
-  
-          </div>
-          )
-     
-          }
-          </>
-        )}    
-      </ul>   
-      :
-      null
-      }
-  
-  </div>
-  
-  )}
-  
+        </div>
+        </div>
    
   
           </DialogContent>
@@ -474,7 +463,7 @@ dividers>
           <Typography gutterBottom style={{marginTop:20}}>
             <i style={{fontWeight:"600",color:"#45CBB2"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
             </Typography>
-            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={responseReturn}>
+            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={submit} >
               Respond
             </Button>
           </DialogActions>

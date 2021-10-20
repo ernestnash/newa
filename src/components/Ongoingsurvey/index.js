@@ -104,8 +104,8 @@ function Ongoingsurvey({history}) {
               ownerUsername={post.ownerUsername}
               questions={post.questions} 
               timestamp={post.timestamp}        
-              formDescription={post.formDescription}
-              formTitle={post.formTitle}
+              doc_desc={post.formDescription}
+              doc_name={post.formTitle}
               read={post.read}
        
               />
