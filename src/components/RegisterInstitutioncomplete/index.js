@@ -101,7 +101,7 @@ if(user !== null){
 <div class="parent">
   <div class="child"><div class="center2">
 
-      <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Complete registration as an institution</span></div>
+      <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Complete registration as a faculty</span></div>
       <div></div> 
       <div className="form-group">
               {/* <label className="col-form-label">E mail </label> */}

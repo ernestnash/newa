@@ -416,7 +416,7 @@ function Login() {
         Register as individual
 
     </a>
-    <a href="#">
+    <a href="/registerfaculty">
         
         <span></span>
 

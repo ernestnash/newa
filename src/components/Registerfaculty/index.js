@@ -238,11 +238,11 @@ function Registerfaculty({history}) {
 <div className="main_body">
 <div class="parent">
   <div class="child"><div class="center2">
-      <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Register as an academic facalty</span></div>
+      <div style={{marginBottom:15}}><span style={{fontSize:20,fontWeight:"600"}}>Register as an academic faculty</span></div>
       <div className="form-group">
               {/* <label className="col-form-label">E mail </label> */}
               <input
-              placeholder="Enter Instution E mail"
+              placeholder="Enter Faculty E mail"
                 type="text"
                 className={`form-control ${errors.email && "invalid"}`}
                 {...register("email", { required: "Faculty Email is Required" ,

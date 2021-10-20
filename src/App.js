@@ -36,7 +36,8 @@ import "@progress/kendo-theme-material/dist/all.css";
 import "hammerjs";
 import Header from './components/Header';
 import Surveyreply from './components/Surveyreply';
-
+import Registerfaculty from './components/Registerfaculty';
+import Registerfacultycomplete from "./components/RegisterInstitutioncomplete"
 
 
 
@@ -112,12 +113,15 @@ function App() {
           <Route exact path="/registerInstitution/complete" component={RegisterInstitutioncomplete}/>
 
           <Route exact path="/registerstudent" component={Registerstudent}/>
+          <Route exact path="/registerfaculty" component={Registerfaculty}/>
           <Route exact path="/registerindividual" component={Registerindividual}/>
           <Route exact path="/ongoingsurveys" component={Ongoingsurvey}/>
           <Route exact path="/researchfindings" component={Researchfindings}/>
           <Route exact path="/recommendedbooks" component={Recommendedbooks}/>
           <Route exact path="/mydashboard" component={Mydashboard1}/>
           <Route exact path="/registerstudent/complete" component={Registerstudentcomplete}/>
+          <Route exact path="/registerfaculty/complete" component={Registerfacultycomplete}/>
+
           <Route exact path="/surveys/replies/:postId" component={Surveyreply}/>
 
           
