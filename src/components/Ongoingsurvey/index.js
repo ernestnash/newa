@@ -42,6 +42,10 @@ function Ongoingsurvey({history}) {
             <div className="OngoingBody">
                 <div style={{textAlign: "center",fontSize:30,fontWeight:"600"}}><span>ONGOING SURVEYS</span>
                 </div>
+                <div style={{marginBottom:5}} class="search-box">
+    <button class="btn-search"><i class="fas fa-search"></i></button>
+    <input type="text" class="input-search" placeholder="Search survey..."/>
+  </div>
  
                 <div style={{marginTop:0}}>
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
