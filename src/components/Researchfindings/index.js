@@ -21,6 +21,10 @@ function Ongoingsurvey({history}) {
   let {user} = useSelector((state)=> ({...state}));
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
+  const [posts1, setPosts1] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
 
   if(!user){
       history.push("/signIn")
@@ -36,6 +40,26 @@ function Ongoingsurvey({history}) {
   }, []);
 
 
+
+
+  useEffect(() => {
+    db.collection('surveys').onSnapshot((snapshot) => {
+      setPosts1(snapshot.docs.map((doc) => doc.data()))
+    })
+
+    if (posts1 !== undefined) {
+      const finalPosts = posts1.filter(res => {
+        return res.formTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+      })
+
+      setFilteredPosts(finalPosts)
+    }
+  }, [searchTerm])
+
+  const updateSearchResults = (e) => {
+    setSearchTerm(e.target.value)
+    // document.getElementsByClassName('dropdown-content3')[0].style.display = 'auto';
+  }
     return (
         <body >
             <Header/>
@@ -43,7 +67,7 @@ function Ongoingsurvey({history}) {
                 <div style={{textAlign: "center",fontSize:30,fontWeight:"600"}}><span>RESEARCH FINDINGS</span></div>
                 <div style={{marginBottom:5}} class="search-box">
     <button class="btn-search"><i class="fas fa-search"></i></button>
-    <input type="text" onChange={(e) => setInput(e.target.value)} class="input-search" placeholder="Search survey..."/>
+    <input type="text" onChange={(e) => setInput(e.target.value)} onChange={updateSearchResults} class="input-search" placeholder="Search survey..."/>
   </div>
                 <div style={{marginTop:10}}>
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -85,7 +109,23 @@ function Ongoingsurvey({history}) {
     
 ):(
 <>
-<span>No such results</span>
+<div style={{}} className="dropdown-content3">
+          <ul id="list">
+            {
+              posts !== undefined ? (
+                filteredPosts.map((posts2) => (
+                  <li>
+                      <h3 className="searchH3">{posts2.formTitle} </h3>
+                  </li>
+                ))
+              ):
+              (
+                  <h3>No such results1</h3>
+              )
+            
+            }
+          </ul>
+        </div>
 </>
 )}
 

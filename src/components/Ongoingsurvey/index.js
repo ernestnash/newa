@@ -10,6 +10,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector,useDispatch } from 'react-redux';
 import Posts from './Posts';
+import Searchresults from './Searchresults';
 import {auth,db} from './../firebase'
 import SearchBar from "material-ui-search-bar";
 
@@ -21,6 +22,10 @@ function Ongoingsurvey({history}) {
   let {user} = useSelector((state)=> ({...state}));
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
+  const [posts1, setPosts1] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
 
   if(!user){
       history.push("/signIn")
@@ -36,6 +41,25 @@ function Ongoingsurvey({history}) {
   }, []);
 
 
+  useEffect(() => {
+    db.collection('surveys').where("active","==", true).onSnapshot((snapshot) => {
+      setPosts1(snapshot.docs.map((doc) => doc.data()))
+    })
+
+    if (posts1 !== undefined) {
+      const finalPosts = posts1.filter(res => {
+        return res.formTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+      })
+
+      setFilteredPosts(finalPosts)
+    }
+  }, [searchTerm])
+
+  const updateSearchResults = (e) => {
+    setSearchTerm(e.target.value)
+    // document.getElementsByClassName('dropdown-content3')[0].style.display = 'auto';
+  }
+
     return (
         <body >
             <Header/>
@@ -44,7 +68,7 @@ function Ongoingsurvey({history}) {
                 </div>
                 <div style={{marginBottom:5}} class="search-box">
     <button class="btn-search"><i class="fas fa-search"></i></button>
-    <input type="text" onChange={(e) => setInput(e.target.value)} class="input-search" placeholder="Search survey..."/>
+    <input type="text"  onChange={updateSearchResults} class="input-search" placeholder="Search available surveys..."/>
   </div>
  
                 <div style={{marginTop:0}}>
@@ -69,7 +93,7 @@ function Ongoingsurvey({history}) {
 
 
 
-{input === ""  ?(
+{searchTerm === ""  ?(
         
           posts.map(({ id, post }) => (
               < Posts 
@@ -88,10 +112,28 @@ function Ongoingsurvey({history}) {
       
           ))
       
+): searchTerm === searchTerm ?(
+  
+
+
+<div style={{}} className="dropdown-content3">
+          <ul id="list">
+            {
+                filteredPosts.map((posts2) => (
+
+
+                  <li>
+                      <span className="">{posts2.formTitle} </span>
+                  </li>
+                ))
+              
+            
+            }
+          </ul>
+        </div> 
+  
 ):(
-  <>
   <span>No such results</span>
-  </>
 )}
 
 
