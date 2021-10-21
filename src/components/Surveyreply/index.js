@@ -243,8 +243,9 @@ const handleClickOpen1 = () => {
         <>
         {questions1?.active === true ?(
         <>
-         <ToastContainer/>
       <div className="submit">
+      <ToastContainer/>
+
         <div className="user_form">
 
             <div className="user_form_section">
@@ -316,7 +317,7 @@ const handleClickOpen1 = () => {
         multiline
         maxRows={3}
         variant="standard"
-        sx={{width:300}}
+        sx={{width:250}}
 
         />
 </div>
