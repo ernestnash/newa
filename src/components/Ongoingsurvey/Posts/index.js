@@ -352,7 +352,7 @@ dividers>
               <BootstrapDialog
           onClose={handleClose1}
           aria-labelledby="customized-dialog-title"
-          style={{height: 800}}
+          style={{height: 650}}
           open={open1}
         >
           <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
