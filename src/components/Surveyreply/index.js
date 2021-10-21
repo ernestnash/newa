@@ -1,48 +1,202 @@
-import React, {useState,useEffect} from 'react'
-import "./styles.css"
-import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import { useSelector,useDispatch } from 'react-redux';
-import moment from 'moment';
+import { Button, Typography } from '@material-ui/core'
+import React ,{useState,useEffect} from 'react'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 import { db,auth } from "../firebase"
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import {Grid} from '@material-ui/core';
-import Checkbox from '@mui/material/Checkbox';
-import { produce } from "immer"
-import CircularProgress from '@mui/material/CircularProgress';
-import { toast, ToastContainer } from 'react-toastify'
+import { useHistory,useParams } from 'react-router-dom';
+
+import "./styles.css"
+
+import axios from "axios"
 
 
 function Surveyreply() {
-    return (
-        <div>
-            <h1>This is Survey Reply</h1>
+  const { postId } = useParams()
+  const [questions1,setQuestions] = useState()
+  var quest = [];
+  var post_answer = [];
+  var history = useHistory()
+
+   var [answer,setAnswer] = useState([])
+//    var [{questions,doc_name,doc_desc},dispatch] = useStateValue("")
+
+useEffect(() => {
+    db.collection('surveys').doc(`${postId}`).onSnapshot((doc) => {
+        setQuestions(doc.data());
+    });
+}, [])
+   function select(que,option){
+    // answer.map((ele)=>{
+    //     ele.question==que ? ele.answer = option : console.log(" ")
+    // })
+
+   var k =answer.findIndex((ele)=>(ele.question == que))
+
+   answer[k].answer=option
+    setAnswer(answer)
+    console.log(answer)
+  }
+
+ useEffect(()=>{
+    questions1?.questions.map((q)=>{
+    answer.push({
+      "question": q.questionText,
+      "answer" : " "
+    })
+    
+  })
+  questions1?.questions.map((q,qindex)=>{
+     quest.push(    {"header": q.questionText, "key": q.questionText })
+  })
+  console.log(answer)
+
+  
+
+
+ },[])
+
+   var  post_answer_data = {}
+
+   function selectinput(que,option){
+    var k =answer.findIndex((ele)=>(ele.question == que))
+
+    answer[k].answer=option
+     setAnswer(answer)
+     console.log(answer)
+   }
+
+   function selectcheck(e,que,option){
+     var d =[]
+  var k =answer.findIndex((ele)=>(ele.question == que))
+  if(answer[k].answer){
+    d=answer[k].answer.split(",")
+
+  }
+
+  if(e == true){
+    d.push(option)
+  }
+  else{
+    var n=d.findIndex((el)=>(el.option == option))
+    d.splice(n,1)
+
+  }
+
+   answer[k].answer=d.join(",")
+
+    setAnswer(answer)
+    console.log(answer)
+   }
+
+
+function submit(){
+  answer.map((ele)=>{
+
+    post_answer_data[ele.question] = ele.answer
+   })
+
+
+  axios.post(`http://localhost:9000/student_response/`,{
+      "column": quest,
+      "answer_data" :[post_answer_data]
+  })
+
+  history.push(`/submitted`)
+}
+    return (  
+      <div className="submit">
+        <div className="user_form">
+            <div className="user_form_section">
+                <div className="user_title_section">
+                    <Typography style={{fontSize:"26px"}} >{questions1?.formTitle}</Typography>
+                    <Typography style={{fontSize:"15px"}} >{questions1?.formTitle}</Typography>
+
+                </div>
+              
+                {
+                questions1?.questions.map((question,qindex)=>(
+                    <div className="user_form_questions">
+                    <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px",fontSize:"14px"}} >{qindex+1}.  {question.questionText}</Typography>
+                    {
+                            question.options.map((ques,index)=>(
+                              
+                              <div key={index} style={{marginBottom:"5px"}}>
+                                  <div style={{display: 'flex'}}>
+                                  <div className="form-check">
+                                    
+                                      {
+
+                                        question.questionType != "radio" ? (  
+                                          question.questionType != 'text' ? (
+                                        <label>
+                                        <input
+                                        
+                                        type={question.questionType}
+                                        name={qindex}
+                                        value= {ques.optionText}
+                                        className="form-check-input"
+                                        required={question.required}
+                                        style={{margnLeft:"5px",marginRight:"5px"}}
+                                        onChange={(e)=>{selectcheck(e.target.checked,question.questionText,ques.optionText)}}
+                                        /> {ques.optionText}
+                                        </label>): (
+
+                                        <label>
+                                        <input
+
+                                        type={question.questionType}
+                                        name={qindex}
+                                        value= {ques.optionText}
+                                        className="form-check-input"
+                                        required={question.required}
+                                        style={{margnLeft:"5px",marginRight:"5px"}}
+                                        onChange={(e)=>{selectinput(question.questionText,e.target.value)}}
+                                        /> {ques.optionText}
+                                        </label>
+                                        )
+                                        
+                                        )
+                                        
+                                        :(  <label>
+                                          <input
+                                            
+                                            type={question.questionType}
+                                            name={qindex}
+                                            value= {ques.optionText}
+                                            className="form-check-input"
+                                            required={question.required}
+                                            style={{margnLeft:"5px",marginRight:"5px"}}
+                                            onChange={()=>{select(question.questionText,ques.optionText)}}
+                                          />
+                                      {ques.optionText}
+                                        </label>)
+
+                                      }
+                                  
+                                  </div>
+                                  </div>
+                                </div>
+                            ))
+                    }
+                    </div>
+                ))
+                
+                }         
+                 
+            <div className="user_form_submit">
+            <Button  variant="contained" color="primary" onClick={submit} style={{fontSize:"14px"}}>Submit</Button>
+
+            </div>
+       
+            <div className="user_footer">
+                Google Forms
+            </div>
+            </div>
+            
+        </div>
         </div>
     )
 }
 
 export default Surveyreply
+

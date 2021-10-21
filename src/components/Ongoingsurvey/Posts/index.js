@@ -105,64 +105,6 @@ function Posts({ postId,  ownerEmail, ownerId, ownerUsername, questions, timesta
 
 
 
-   const responseReturn = (event) => {
-
-    event.preventDefault();
-    let errors = {};
-
-
-    if(!lat && !lng){
-
-      if (!navigator.geolocation) {
-        setStatus('Geolocation is not supported by your browser');
-
-      } else {
-        setStatus('Locating...');
-        navigator.geolocation.getCurrentPosition((position) => {
-          setStatus(null);
-          setLat(position.coords.latitude);
-          setLng(position.coords.longitude);
-        }, () => {
-          setStatus('Unable to retrieve your location');
-        });
-      }
-    }else{
-
-    
-  
-    setLoading(true)
-
-    db.collection('surveys').doc(postId).collection("responses").where("fromId", "==", auth.currentUser.uid).where("formId", "==",postId ).get().then(
-      snap => {
-        if (snap.docs.length > 0) {
-          setLoading(false)
-          toast.error("You have participated already!")
-        }
-        else {
-            db.collection('surveys').doc(postId).collection("responses").add({
-                //
-              timestamp:  Date.now(),
-              fromEmail: auth?.currentUser?.email,
-              fromId:auth?.currentUser?.uid,
-              // questions1: questions1,
-                  read: false,
-                  reply: true,
-                  formId: postId,
-                  ownerFormId: ownerId,
-                  lat,
-                  lng,
-             
-            }).then(ref =>{
-              setLoading(false)
-              toast.success("Thank you the response has been submitted successfully\nThe information provided shall be treated confidential")
-            })
-        }
-      }
-    )
-  
-  }
-    
-}
 
 
 function select(que,option){
@@ -548,7 +490,7 @@ dividers>
           <Typography gutterBottom style={{marginTop:20}}>
             <i style={{fontWeight:"600",color:"#45CBB2"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
             </Typography>
-            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={addData1} >
+            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={submit} >
               Respond
             </Button>
           </DialogActions>
