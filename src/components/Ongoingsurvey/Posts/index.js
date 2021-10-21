@@ -240,12 +240,7 @@ const submit =() =>{
 }
 
 
-// axios.post(`http://localhost:9000/student_response/${doc_name}`,{
-//     "column": quest,
-//     "answer_data" :[post_answer_data]
-// })
 
-// history.push(`/submitted`)
 }
 const handleClickOpen1 = () => {
   setOpen1(true);
@@ -327,9 +322,10 @@ dividers>
                             <TableRow>
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Date Modified</TableCell>
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Owner Email</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Status</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">More</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Respond</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Respond</TableCell>
                             </TableRow>
+                            
                           </TableHead>
                           <TableBody>
                               <TableRow >
@@ -337,9 +333,13 @@ dividers>
                                   {date.toDateString()}, {date.toLocaleTimeString()}
                                 </TableCell>
                                 <TableCell>{ownerEmail}</TableCell>
-                                <TableCell align="right">Open</TableCell>
                                 <TableCell align="right">
-                                    <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Respond</button>
+                                  <a href={`/surveys/replies/${postId}`}>
+                                <button   style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Non Modal</button>
+                                </a>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Modal</button>
                                 </TableCell>
                               </TableRow>
                           </TableBody>

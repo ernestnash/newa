@@ -123,7 +123,7 @@ function App() {
           <Route exact path="/registerfaculty/complete" component={Registerfacultycomplete}/>
 
           <Route exact path="/surveys/replies/:postId" component={Surveyreply}/>
-          <Route exact path="/survey/response/thanks" component={Thanks}/>
+          <Route exact path="/surveys/replies/:postId/thanks" component={Thanks}/>
           
         </Switch>
 
