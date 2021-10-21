@@ -459,7 +459,7 @@ function onRadio(questionId) {
         title={`${formTitle}`}
         url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
         hashtag={"#academicsurvey"}
-        description={"Simple Academic Survey"}
+        description={`${formDescription}`}
       >
         <EmailIcon  size={32} round />
       </EmailShareButton>
@@ -471,7 +471,7 @@ function onRadio(questionId) {
         url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
         // quote={"Talking is easy just show me the codes."}
         hashtag={"#academicsurvey"}
-        description={"Simple Academic Survey"}
+        description={`${formDescription}`}
         className=""
       >
         <FacebookIcon size={32} round />
@@ -482,7 +482,7 @@ function onRadio(questionId) {
         title={`${formTitle}`}
         url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
         hashtag={"#academicsurvey"}
-        description={"Simple Academic Survey"}
+        description={`${formDescription}`}
       >
         <TwitterIcon size={32} round />
       </TwitterShareButton>
@@ -492,7 +492,7 @@ function onRadio(questionId) {
         title={`${formTitle}`}
         url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
         hashtag={"#academicsurvey"}
-        description={"Simple Academic Survey"}
+        description={`${formDescription}`}
       >
         <WhatsappIcon size={32} round />
       </WhatsappShareButton>
@@ -503,7 +503,7 @@ function onRadio(questionId) {
         title={`${formTitle}`}
         url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
         hashtag={"#academicsurvey"}
-        description={"Simple Academic Survey"}
+        description={`${formDescription}`}
       >
         <LinkedinIcon size={32} round />
       </LinkedinShareButton>
