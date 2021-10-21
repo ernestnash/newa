@@ -966,8 +966,9 @@ const deleteUser1 = (e) => {
 
     <div class="row">
         <div class="col-md-4">
-
-        <img  src={profileUserData?.profilePhoto} className="profileAvatar " />
+        <div class="img-container-block">
+  <img src={profileUserData?.profilePhoto} alt="Profile image" className="profileAvatar "/>
+</div>
 
             <ul title="Ratings" class="list-inline ratings text-center">
                 <li><a href="#"><span class="glyphicon glyphicon-star">
