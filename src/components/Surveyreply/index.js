@@ -285,7 +285,7 @@ const handleClickOpen1 = () => {
                                         required={question?.required}
                                         style={{margnLeft:"5px",marginRight:"5px"}}
                                         onChange={(e)=>{selectcheck(e.target.checked,question?.questionText,ques?.optionText)}}
-                                        /> {ques.optionText}
+                                        /> {ques?.optionText}
                                         </label>): (
 
                                         <label>
@@ -337,7 +337,7 @@ const handleClickOpen1 = () => {
                                             style={{margnLeft:"5px",marginRight:"5px"}}
                                             onChange={()=>{select(question?.questionText,ques?.optionText)}}
                                           />
-                                      {ques.optionText}
+                                      {ques?.optionText}
                                         </label>)
 
                                       }
