@@ -47,6 +47,9 @@ import Select from '@mui/material/Select';
 import SubjectIcon from '@mui/icons-material/Subject';
 import { CSVLink, CSVDownload } from "react-csv";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import ShareIcon from '@mui/icons-material/Share';
+import PreviewIcon from '@mui/icons-material/Preview';
+
 
 function Posts({ postId,  ownerEmail, ownerId, ownerUsername, questions, timestamp, formDescription, formTitle, read, active,posts}) {
     const [open, setOpen] = React.useState(false);
@@ -358,11 +361,12 @@ dividers>
         sx={{border: "none"}}
         >
           {/* <MenuItem value={10}>Ten</MenuItem> */}
-          <MenuItem  ><a href={`/surveys/replies/${postId}`}>View</a></MenuItem>
+          <MenuItem> <a href={`/surveys/replies/${postId}`}><PreviewIcon style={{color: "#45CBB2"}}/> <span style={{color: "#000"}}>View Survey</span></a></MenuItem>;
            <MenuItem> <CSVLink data={csvData}><DocumentScannerIcon style={{color: "#45CBB2"}}/> <span style={{color: "#000"}}>Export to Csv</span></CSVLink></MenuItem>;
           <MenuItem onClick={downloadExcel}><SubjectIcon style={{color: "#45CBB2"}} /> Export to Excel</MenuItem>
           
           <MenuItem onClick={downloadPdf}><PrintIcon style={{color: "#45CBB2"}} /> Export to Pdf</MenuItem>
+          <MenuItem ><ShareIcon style={{color: "#45CBB2"}} /> Share Survey</MenuItem>
         </Select>
                      </TableCell>
   
