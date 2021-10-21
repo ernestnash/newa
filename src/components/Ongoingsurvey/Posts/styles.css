@@ -83,3 +83,20 @@ margin-bottom: 8px;
     font-size: medium;
     font-weight: 500;
 }
+
+
+
+
+
+
+@media(max-width:991px) {
+    .InputText{
+     display:none
+    }
+}
+
+@media(min-width:991px) {
+    .InputText1{
+     display:none
+    }
+}

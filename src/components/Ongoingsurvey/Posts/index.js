@@ -199,25 +199,25 @@ console.log(answer)
 
  
 
- const onQuestionOptionChange = (e) => {
-   console.log("Text: ",e.target.value)
-   setQuestionOption(e.target.value)
- }
- function selectinput(que,option){
+//  const onQuestionOptionChange = (e) => {
+//    console.log("Text: ",e.target.value)
+//    setQuestionOption(e.target.value)
+//  }
+function selectinput(que,option){
+  console.log("Value1: ",questionOption)
+
   var k =answer.findIndex((ele)=>(ele.question == que))
 
-  answer[k].answer=option
+  answer[k].answer=questionOption
    setAnswer(answer)
-   console.log("Ans: ",answer)
  }
-
 
 
  function selectcheck(e,que,option){
    var d =[]
 var k =answer.findIndex((ele)=>(ele.question == que))
 if(answer[k].answer){
-  d=answer[k].answer.split(",")
+  d=answer[k].answer.split(", ")
 
 }
 
@@ -230,18 +230,72 @@ else{
 
 }
 
- answer[k].answer=d.join(",")
+ answer[k].answer=d.join(", ")
 
   setAnswer(answer)
   console.log(answer)
  }
 
 
-function submit(){
-answer.map((ele)=>{
+ const addData1 = () =>{
 
-  post_answer_data[ele.question] = ele.answer
- })
+
+   console.log("Data: ",answer)
+ }
+
+const submit =() =>{
+
+
+ if(!lat && !lng){
+
+   if (!navigator.geolocation) {
+     setStatus('Geolocation is not supported by your browser');
+
+   } else {
+     setStatus('Locating...');
+     navigator.geolocation.getCurrentPosition((position) => {
+       setStatus(null);
+       setLat(position.coords.latitude);
+       setLng(position.coords.longitude);
+     }, () => {
+       setStatus('Unable to retrieve your location');
+     });
+   }
+ }else{
+
+ 
+
+ setLoading(true)
+
+ db.collection('surveys').doc(postId).collection("responses").where("fromId", "==", auth.currentUser.uid).where("formId", "==",postId ).get().then(
+   snap => {
+     if (snap.docs.length > 0) {
+       setLoading(false)
+       toast.error("You have participated already!")
+     }
+     else {
+         db.collection('surveys').doc(postId).collection("responses").add({
+             //
+           timestamp:  Date.now(),
+           fromEmail: auth?.currentUser?.email,
+           fromId:auth?.currentUser?.uid,
+           questions1: answer,
+               read: false,
+               reply: true,
+               formId: postId,
+               ownerFormId: ownerId,
+               lat,
+               lng,
+          
+         }).then(ref =>{
+           setLoading(false)
+           toast.success("Thank you the response has been submitted successfully\nThe information provided shall be treated confidential")
+         })
+     }
+   }
+ )
+
+}
 
 
 // axios.post(`http://localhost:9000/student_response/${doc_name}`,{
@@ -405,16 +459,47 @@ dividers>
                                         <label>
 
 
-                                        <input
 
-                                        type={question.questionType}
-                                        name={qindex}
-                                        value= {ques.optionText}
-                                        className="form-check-input"
-                                        required={question.required}
-                                        style={{margnLeft:"5px",marginRight:"5px"}}
-                                        onChange={(e)=>{selectinput(question.questionText,e.target.value)}}
-                                        /> 
+<div  className="InputText">
+<TextField
+              type={question.questionType}
+                name={qindex}
+                 required={question.required}
+               style={{margnLeft:"5px",marginRight:"5px"}}
+           onChange={(e)=>{selectinput(question.questionText,setQuestionOption(e.target.value))}}
+          label="Your answer"
+          placeholder="Type here..."
+          multiline
+          maxRows={3}
+          variant="standard"
+         
+        sx={{width:400}}
+        />
+</div>
+<div  className="InputText1">
+<TextField
+              type={question.questionType}
+              name={qindex}
+               required={question.required}
+             style={{margnLeft:"5px",marginRight:"5px"}}
+         onChange={(e)=>{selectinput(question.questionText,setQuestionOption(e.target.value))}}
+        label="Your answer"
+        placeholder="Type here..."
+        multiline
+        maxRows={3}
+        variant="standard"
+         
+        />
+</div>
+                                        {/* <input
+
+                                    type={question.questionType}
+                                    name={qindex}
+                                    className="form-check-input"                                     
+                                    required={question.required}
+                                    style={{margnLeft:"5px",marginRight:"5px"}}
+                                 onChange={(e)=>{selectinput(question.questionText,setQuestionOption(e.target.value))}}
+                                       />  */}
                                         {ques.optionText}
 
 
@@ -463,7 +548,7 @@ dividers>
           <Typography gutterBottom style={{marginTop:20}}>
             <i style={{fontWeight:"600",color:"#45CBB2"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
             </Typography>
-            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={submit} >
+            <Button style={{fontWeight:"600",marginTop:0,backgroundColor: "#45CBB2",border:"none",color: "#fff"}} autoFocus onClick={addData1} >
               Respond
             </Button>
           </DialogActions>
