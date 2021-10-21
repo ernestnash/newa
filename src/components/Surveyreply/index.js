@@ -148,56 +148,63 @@ useEffect(() => {
 
 const submit = () =>{
 
-    if(!lat && !lng){
+    if(questions1?.active === true){
+        if(!lat && !lng){
 
-        if (!navigator.geolocation) {
-          setStatus('Geolocation is not supported by your browser');
-     
-        } else {
-          setStatus('Locating...');
-          navigator.geolocation.getCurrentPosition((position) => {
-            setStatus(null);
-            setLat(position.coords.latitude);
-            setLng(position.coords.longitude);
-          }, () => {
-            setStatus('Unable to retrieve your location');
-          });
-        }
-      }else{
-        setLoading(true)
-
-      
-     
-     
-      db.collection('surveys').doc(postId).collection("responses").where("fromId", "==", auth.currentUser.uid).where("formId", "==",postId ).get().then(
-        snap => {
-          if (snap.docs.length > 0) {
-            setLoading(false)
-            toast.error("You have participated already!")
-          }
-          else {
-              db.collection('surveys').doc(postId).collection("responses").add({
-                  //
-                timestamp:  Date.now(),
-                fromEmail: auth?.currentUser?.email,
-                fromId:auth?.currentUser?.uid,
-                questions1: answer,
-                    read: false,
-                    reply: true,
-                    formId: postId,
-                    ownerFormId: questions1?.ownerId,
-                    lat,
-                    lng,
-               
-              }).then(ref =>{
+            if (!navigator.geolocation) {
+              setStatus('Geolocation is not supported by your browser');
+         
+            } else {
+              setStatus('Locating...');
+              navigator.geolocation.getCurrentPosition((position) => {
+                setStatus(null);
+                setLat(position.coords.latitude);
+                setLng(position.coords.longitude);
+              }, () => {
+                setStatus('Unable to retrieve your location');
+              });
+            }
+          }else{
+            setLoading(true)
+    
+          
+         
+         
+          db.collection('surveys').doc(postId).collection("responses").where("fromId", "==", auth.currentUser.uid).where("formId", "==",postId ).get().then(
+            snap => {
+              if (snap.docs.length > 0) {
                 setLoading(false)
-                history.push(`/surveys/replies/${postId}/thanks`)
-              })
-          }
-        }
-      )
-     
-     }
+                toast.error("You have participated already!")
+              }
+              else {
+                  db.collection('surveys').doc(postId).collection("responses").add({
+                      //
+                    timestamp:  Date.now(),
+                    fromEmail: auth?.currentUser?.email,
+                    fromId:auth?.currentUser?.uid,
+                    questions1: answer,
+                        read: false,
+                        reply: true,
+                        formId: postId,
+                        ownerFormId: questions1?.ownerId,
+                        lat,
+                        lng,
+                   
+                  }).then(ref =>{
+                    setLoading(false)
+                    history.push(`/surveys/replies/${postId}/thanks`)
+                  })
+              }
+            }
+          )
+         
+         }
+    }else{
+        setLoading(false)
+        toast.error("Sorry this survey has been closed!")
+    }
+
+    
 }
 
 const handleClickOpen1 = () => {
@@ -208,40 +215,10 @@ const handleClickOpen1 = () => {
     setOpen1(false);
   };
 
-// if(loading){
-//     return(
 
-//      <BootstrapDialog
-//      onClose={handleClose1}
-//      aria-labelledby="customized-dialog-title"
-//      open={open1}
-    
-//    >
-
-//      <DialogContent 
-//       style={{backgroundColor: "trasparency"}}          
-// dividers>
-//      <Typography gutterBottom >
-     
-// <div style={{alignItems: "center",display: "flex"}}>
-// <div><CircularProgress /></div>
-// <div style={{marginLeft:10}}> Loading... </div>
-// </div>
-
- 
-//      </Typography>
-
-
-//      </DialogContent>
-
-//    </BootstrapDialog>
-     
-//     )
-//   }else{
 
     return (  
         <>
-        {questions1?.active === true ?(
         <>
       <div className="submit">
       <ToastContainer/>
@@ -363,9 +340,7 @@ const handleClickOpen1 = () => {
         </div>
         </div>
         </>
-        ):(
-            <h4>Loading...</h4>
-        )}
+
        
         </>
     )
