@@ -958,7 +958,7 @@ const deleteUser1 = (e) => {
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           <div style={{textAlign: "center"}}>
-        <span>MY Profile</span>
+        <span style={{color: "#45CBB2"}}>My Profile</span>
         </div>
         </BootstrapDialogTitle>
         <DialogContent dividers>
@@ -1100,8 +1100,8 @@ const deleteUser1 = (e) => {
         <Typography gutterBottom style={{marginTop:20}}>
           <i style={{fontWeight:"600"}}>" Survey and test a prospective action before undertaking it. Before you proceed, step back and look at the big picture, lest you act rashly on raw impulse."</i>
           </Typography>
-          <Button onClick={handleClickUpdateProfiledOpen} style={{fontWeight:"600",marginTop:0,border: "1px solid #000"}} >
-            Update Profile
+          <Button onClick={handleClickUpdateProfiledOpen} style={{fontWeight:"600",marginTop:0,border: "1px solid #45CBB2"}} >
+            <span style={{color: "#45CBB2"}}>Update Profile</span>
           </Button>
         </DialogActions>
         </DialogContent>
@@ -1156,7 +1156,7 @@ const deleteUser1 = (e) => {
 
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseUpdateProfile}>
           <div style={{textAlign: "center"}}>
-        <span>MY Profile Update</span>
+        <span style={{color: "#45CBB2"}}>My Profile Update</span>
         </div>
         </BootstrapDialogTitle>
         <DialogContent dividers>
@@ -1179,8 +1179,8 @@ const deleteUser1 = (e) => {
                         <p>Are you sure you want to change your profile picture ?</p>
                         <progress value={progress} max="100" style={{ display: 'none' }} className="progress" />
                         <div style={{alignSelf: "center"}} className="buttons">
-                            <button onClick={handleUpload}>Yes</button>
-                            <button onClick={handleClose1}>No</button>
+                            <button style={{color: "#45CBB2"}} onClick={handleUpload}>Yes</button>
+                            <button  style={{color: "#45CBB2"}} onClick={handleClose1}>No</button>
                         </div>
                     </div>
                 </div>
@@ -1189,7 +1189,8 @@ const deleteUser1 = (e) => {
                     <input style={{display: "none"}} onChange={handleChange} type="file" accept="image/*" className='inputImage' />
 
                     <div class="pl-sm-4 pl-2" id="img-section"> <b>Profile Photo</b>
-            <p></p> <button onClick={uploadFileWithClick} class="btn button border"><b>Upload</b></button>
+            <p></p> 
+            <div class="">  <button onClick={uploadFileWithClick} class="btn border button">Upload</button> </div>
         </div>
     </div>
     <div class="py-2">
@@ -1202,7 +1203,7 @@ const deleteUser1 = (e) => {
             </div>
             </div>
                 <div className="usernameFields">
-                    <textarea value={username} placeholder="Describe who you are" onChange={usernameSet} className="bioInput" />
+                    <textarea value={username} placeholder="Update your username" onChange={usernameSet} className="bioInput" />
                     <p>{`${101 - username.length} characters remaining`}</p>
                     <div className="cancelAndSaveButtons">
                         <button onClick={collapseUsername} >Cancel</button>
@@ -1310,7 +1311,7 @@ const deleteUser1 = (e) => {
             </div>
 
                 <div className="bioFields">
-                    <textarea value={bio} placeholder="Updtate your username" onChange={bioSet} className="bioInput" />
+                    <textarea value={bio} placeholder="Updtate your bio" onChange={bioSet} className="bioInput" />
                     <p>{`${101 - bio.length} characters remaining`}</p>
                     <div className="cancelAndSaveButtons">
                         <button onClick={collapsebio} >Cancel</button>
@@ -1513,7 +1514,6 @@ const deleteUser1 = (e) => {
         <div class="py-3 pb-4 border-bottom">  <button onClick={handleCloseUpdateProfile} class="btn border button">Cancel</button> </div>
         <div class="d-sm-flex align-items-center pt-3" id="deactivate">
             <div> <b>Deactivate your account</b>
-                <p>Details about your company account and password</p>
             </div>
             <div class="ml-auto"> <button onClick={deleteUser1} class="btn danger">Deactivate</button> </div>
         </div>

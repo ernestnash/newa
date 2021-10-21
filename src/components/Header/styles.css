@@ -172,11 +172,11 @@ select:focus {
 
 .button {
     background-color: #fff;
-    color: #0779e4
+    color: #45CBB2
 }
 
 .button:hover {
-    background-color: #0779e4;
+    background-color: #45CBB2;
     color: #fff
 }
 
@@ -364,6 +364,7 @@ img{
 
 .profileHead2 button:hover {
   background-color: #2276bb;
+  color: #fff;
 }
 
 
