@@ -395,7 +395,7 @@ dividers>
                                         required={question.required}
                                         style={{margnLeft:"5px",marginRight:"5px"}}
                                         onChange={(e)=>{selectcheck(e.target.checked,question.questionText,ques.optionText)}}
-                                        /> {ques.optionText}
+                                        /> 
                                         </label>): (
 
                                         <label>
@@ -433,16 +433,7 @@ dividers>
          
         />
 </div>
-                                        {/* <input
 
-                                    type={question.questionType}
-                                    name={qindex}
-                                    className="form-check-input"                                     
-                                    required={question.required}
-                                    style={{margnLeft:"5px",marginRight:"5px"}}
-                                 onChange={(e)=>{selectinput(question.questionText,setQuestionOption(e.target.value))}}
-                                       />  */}
-                                        {ques.optionText}
 
 
                                         </label>
