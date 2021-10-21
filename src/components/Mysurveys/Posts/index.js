@@ -49,7 +49,53 @@ import { CSVLink, CSVDownload } from "react-csv";
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import ShareIcon from '@mui/icons-material/Share';
 import PreviewIcon from '@mui/icons-material/Preview';
+import Backdrop from '@mui/material/Backdrop';
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  HatenaShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PinterestShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton
+} from "react-share";
 
+import {
+  EmailIcon,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  HatenaIcon,
+  InstapaperIcon,
+  LineIcon,
+  LinkedinIcon,
+  LivejournalIcon,
+  MailruIcon,
+  OKIcon,
+  PinterestIcon,
+  PocketIcon,
+  RedditIcon,
+  TelegramIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  VKIcon,
+  WeiboIcon,
+  WhatsappIcon,
+  WorkplaceIcon
+} from "react-share";
+import { MailIcon } from 'react-mail-icon'
 
 function Posts({ postId,  ownerEmail, ownerId, ownerUsername, questions, timestamp, formDescription, formTitle, read, active,posts}) {
     const [open, setOpen] = React.useState(false);
@@ -66,7 +112,13 @@ const [answers, setAnswer] = React.useState({})
   const [status, setStatus] = useState(null);
   const [surveyChecked, setSurveyChecked] = useState("");
   const [loading, setLoading] = useState(false)
-  
+  const [open2, setOpen2] = React.useState(false);
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+  const handleToggle = () => {
+    setOpen2(true);
+  };
   // const [valueChecked, setSurveyChecked] = useState(false);
   var d = timestamp;
   //var d =val.timestamp;
@@ -307,39 +359,11 @@ function onRadio(questionId) {
       doc.save(`Survey ${formTitle}`)
     }
 
-     if(loading){
-       return(
 
-        <BootstrapDialog
-        onClose={handleClose1}
-        aria-labelledby="customized-dialog-title"
-        open={open1}
-       
-      >
-
-        <DialogContent 
-         style={{backgroundColor: "trasparency"}}          
-dividers>
-        <Typography gutterBottom >
-        
-<div style={{alignItems: "center",display: "flex"}}>
-  <div><CircularProgress /></div>
-  <div style={{marginLeft:10}}> Loading... </div>
-</div>
-
-    
-        </Typography>
-  
-
-        </DialogContent>
-
-      </BootstrapDialog>
-        
-       )
-     }else{
       return (
         <>
         <ToastContainer />
+        
               <React.Fragment>
                 <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
                   <TableCell>
@@ -366,7 +390,7 @@ dividers>
           <MenuItem onClick={downloadExcel}><SubjectIcon style={{color: "#45CBB2"}} /> Export to Excel</MenuItem>
           
           <MenuItem onClick={downloadPdf}><PrintIcon style={{color: "#45CBB2"}} /> Export to Pdf</MenuItem>
-          <MenuItem ><ShareIcon style={{color: "#45CBB2"}} /> Share Survey</MenuItem>
+          <MenuItem onClick={handleToggle} ><ShareIcon  style={{color: "#45CBB2"}} /> Share Survey</MenuItem>
         </Select>
                      </TableCell>
   
@@ -418,7 +442,77 @@ dividers>
                   </TableCell>
                 </TableRow>
               </React.Fragment>
-              <BootstrapDialog
+
+
+              
+
+
+              <Backdrop
+     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+     open={open2}
+     onClick={handleClose2}
+   >
+     <div style={{display: "flex",padding:10,justifyContent:"space-between",width:250,backgroundColor:"#fff",borderRadius:40}}>
+
+     <div>
+       <EmailShareButton
+        title={`${formTitle}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={"Simple Academic Survey"}
+      >
+        <EmailIcon  size={32} round />
+      </EmailShareButton>
+       </div>
+
+       <div>
+       <FacebookShareButton
+        title={`${formTitle}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        // quote={"Talking is easy just show me the codes."}
+        hashtag={"#academicsurvey"}
+        description={"Simple Academic Survey"}
+        className=""
+      >
+        <FacebookIcon size={32} round />
+      </FacebookShareButton>
+       </div>
+       <div>
+       <TwitterShareButton
+        title={`${formTitle}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={"Simple Academic Survey"}
+      >
+        <TwitterIcon size={32} round />
+      </TwitterShareButton>
+       </div>
+       <div>
+       <WhatsappShareButton
+        title={`${formTitle}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={"Simple Academic Survey"}
+      >
+        <WhatsappIcon size={32} round />
+      </WhatsappShareButton>
+       </div>
+
+              <div>
+       <LinkedinShareButton
+        title={`${formTitle}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={"Simple Academic Survey"}
+      >
+        <LinkedinIcon size={32} round />
+      </LinkedinShareButton>
+       </div>  
+
+     </div>
+   </Backdrop>
+
+                <BootstrapDialog
           onClose={handleClose1}
           aria-labelledby="customized-dialog-title"
           open={open1}
@@ -449,7 +543,9 @@ dividers>
         </BootstrapDialog>
             </>
     )
-     }
+
+    
+     
 
 }
 

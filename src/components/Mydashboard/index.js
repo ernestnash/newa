@@ -67,6 +67,9 @@ function Mydashboard({history}) {
     const [showSurveys1, setSurveys1] = useState(false)
     const [showDashboard1, setDashboard1] = useState(false)
 
+    if(!user){
+        history.push("/signIn")
+    }
  const showSurveys = () =>{
     setSurveys1(true)
     setDashboard1(false)
