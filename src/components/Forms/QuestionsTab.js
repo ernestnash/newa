@@ -36,7 +36,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import { styled } from '@mui/material/styles';
-
+import Backdrop from '@mui/material/Backdrop';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -55,7 +55,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
-
 // ------------------------------------------
 import "./styles.css"
 import {BsFileText} from "react-icons/bs"
@@ -150,7 +149,14 @@ function QuestionsTab({setFormTitle, formDescription, formTitle, setFormDescript
   const [open1, setOpen1] = React.useState(false);
   const [questionType,setType] =useState("radio");
   const [questionRequired,setRequired] =useState("true"); 
-  
+  const [open2, setOpen2] = React.useState(true);
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+  const handleToggle = () => {
+    setOpen2(true);
+  };
+
   useEffect(()=>{
       var newQuestion = {questionText: "Question",answer:false,answerKey:"",questionType:"radio", options : [{optionText: "Option 1"}], open: true, required:false}
 
@@ -684,98 +690,101 @@ function addMoreQuestionField(){
       <>
 
                       <ToastContainer/>
-
-       <div style={{marginTop:'15px', marginBottom: '7px', paddingBottom:"30px"}}>
+                      {loading ?(
+                        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open2}
+        onClick={handleClose2}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+                      ):(
+                        <div style={{marginTop:'15px', marginBottom: '7px', paddingBottom:"30px"}}>
            
-           {formDescription !== '' && formTitle !== '' &&(
-            <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-            >
-              
-             <Grid item xs={12} sm={5} style={{width: '100%'}}>
-                  <motion.div
-                                    variants={containerVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                  >
-                  <Grid style={{borderTop: '10px solid teal', borderRadius: 10}}
-
-                  >
-                      <div>
-                          <div>
-                            <Paper elevation={2} style={{width:'100%'}}>
-                              <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '15px', paddingTop: '20px', paddingBottom: '20px'}}>
-                                
-                                <Typography variant="h4" style={{fontFamily:'sans-serif Roboto', marginBottom:"15px"}}>
-                                {loading &&(
-
-     
-<div style={{alignItems: "center",display: "flex",justifyContent:"center"}}>
-<div><CircularProgress style={{color: "#45CBB2"}}/></div>
-<div style={{marginLeft:10,color:"#45CBB2"}}> Loading... </div>
-</div>
-
-      )}
-                                  {formTitle}
-                                 
-                                </Typography>
-                                <Typography variant="subtitle1">
-                                    {formDescription}
-                                </Typography>
-                              </div>
-                            </Paper>
-                          </div> 
-                      </div>       
-                  </Grid>  
-                 </motion.div>
-
-                  <Grid style={{paddingTop: '10px'}}>
-                    <motion.div
-                    variants={submitBtns}
-                    >
-                    <ImageUplaodModel handleImagePopOpen={openUploadImagePop} handleImagePopClose={()=>{setOpenUploadImagePop(false)}} updateImageLink={updateImageLink} contextData={imageContextData}/>
-
-                    <DragDropContext onDragEnd={onDragEnd}>
-                      <Droppable droppableId="droppable">
-                        {(provided, snapshot) => (
-                          <div
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                          >
-                            {questionsUI()}
-
-                            {provided.placeholder}
-                          </div>
+                        {formDescription !== '' && formTitle !== '' &&(
+                         <Grid
+                         container
+                         direction="column"
+                         justify="center"
+                         alignItems="center"
+                         >
+                           
+                          <Grid item xs={12} sm={5} style={{width: '100%'}}>
+                               <motion.div
+                                                 variants={containerVariants}
+                                                 initial="hidden"
+                                                 animate="visible"
+                               >
+                               <Grid style={{borderTop: '10px solid teal', borderRadius: 10}}
+             
+                               >
+                                   <div>
+                                       <div>
+                                         <Paper elevation={2} style={{width:'100%'}}>
+                                           <div style={{display: 'flex',flexDirection:'column', alignItems:'flex-start', marginLeft: '15px', paddingTop: '20px', paddingBottom: '20px'}}>
+                                             
+                                             <Typography variant="h4" style={{fontFamily:'sans-serif Roboto', marginBottom:"15px"}}>
+                                             
+                                               {formTitle}
+                                              
+                                             </Typography>
+                                             <Typography variant="subtitle1">
+                                                 {formDescription}
+                                             </Typography>
+                                           </div>
+                                         </Paper>
+                                       </div> 
+                                   </div>       
+                               </Grid>  
+                              </motion.div>
+             
+                               <Grid style={{paddingTop: '10px'}}>
+                                 <motion.div
+                                 variants={submitBtns}
+                                 >
+                                 <ImageUplaodModel handleImagePopOpen={openUploadImagePop} handleImagePopClose={()=>{setOpenUploadImagePop(false)}} updateImageLink={updateImageLink} contextData={imageContextData}/>
+             
+                                 <DragDropContext onDragEnd={onDragEnd}>
+                                   <Droppable droppableId="droppable">
+                                     {(provided, snapshot) => (
+                                       <div
+                                         {...provided.droppableProps}
+                                         ref={provided.innerRef}
+                                       >
+                                         {questionsUI()}
+             
+                                         {provided.placeholder}
+                                       </div>
+                                     )}
+                                   </Droppable>
+                                 </DragDropContext>
+                                 <div>                       
+                                     <Button
+                                       variant="contained"
+                                       
+                                       onClick={addMoreQuestionField}
+                                       endIcon={<AddCircleIcon />}
+                                       style={{margin: '5px'}}
+                                     >Add Question </Button>
+             
+                                     <Button
+                                       variant="contained"
+                                       color="primary"
+                                       onClick={addData}
+                                       style={{margin: '5px'}}
+                                       endIcon={<PublishIcon />}
+                                     >Submit </Button>
+                                   </div>
+                                 </motion.div>
+                               </Grid>        
+                           </Grid>           
+                        </Grid>
                         )}
-                      </Droppable>
-                    </DragDropContext>
-                    <div>                       
-                        <Button
-                          variant="contained"
-                          
-                          onClick={addMoreQuestionField}
-                          endIcon={<AddCircleIcon />}
-                          style={{margin: '5px'}}
-                        >Add Question </Button>
+                        
+                    </div>
+                      )}
+                      
 
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={addData}
-                          style={{margin: '5px'}}
-                          endIcon={<PublishIcon />}
-                        >Submit </Button>
-                      </div>
-                    </motion.div>
-                  </Grid>        
-              </Grid>           
-           </Grid>
-           )}
-           
-       </div>
        </>
   );
   

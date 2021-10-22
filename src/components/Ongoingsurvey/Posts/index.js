@@ -38,6 +38,54 @@ import { produce } from "immer"
 import CircularProgress from '@mui/material/CircularProgress';
 import { toast, ToastContainer } from 'react-toastify'
 import { useHistory } from "react-router-dom"
+import ShareIcon from '@mui/icons-material/Share';
+import Backdrop from '@mui/material/Backdrop';
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  HatenaShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  LinkedinShareButton,
+  LivejournalShareButton,
+  MailruShareButton,
+  OKShareButton,
+  PinterestShareButton,
+  PocketShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  VKShareButton,
+  WhatsappShareButton,
+  WorkplaceShareButton
+} from "react-share";
+
+import {
+  EmailIcon,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  HatenaIcon,
+  InstapaperIcon,
+  LineIcon,
+  LinkedinIcon,
+  LivejournalIcon,
+  MailruIcon,
+  OKIcon,
+  PinterestIcon,
+  PocketIcon,
+  RedditIcon,
+  TelegramIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  VKIcon,
+  WeiboIcon,
+  WhatsappIcon,
+  WorkplaceIcon
+} from "react-share";
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuDialogContent-root': {
@@ -86,7 +134,13 @@ function Posts({ postId,  ownerEmail, ownerId, ownerUsername, questions, timesta
   
      var [answer,setAnswer] = useState([])
     let {user} = useSelector((state)=> ({...state}));
-
+    const [open2, setOpen2] = React.useState(false);
+    const handleClose2 = () => {
+      setOpen2(false);
+    };
+    const handleToggle = () => {
+      setOpen2(true);
+    };
 
   const [numberOfSurvey, setNumberOfSurvey] = React.useState(0)
   const [lat, setLat] = useState(null);
@@ -322,8 +376,8 @@ dividers>
                             <TableRow>
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Date Modified</TableCell>
                               <TableCell style={{fontWeight:"600",color:"#45CBB2"}}>Owner Email</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Respond</TableCell>
-                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Respond</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Participate</TableCell>
+                              <TableCell style={{fontWeight:"600",color:"#45CBB2"}} align="right">Share</TableCell>
                             </TableRow>
                             
                           </TableHead>
@@ -335,11 +389,12 @@ dividers>
                                 <TableCell>{ownerEmail}</TableCell>
                                 <TableCell align="right">
                                   <a href={`/surveys/replies/${postId}`}>
-                                <button   style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Non Modal</button>
+                                <button   style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Respond</button>
                                 </a>
                                 </TableCell>
                                 <TableCell align="right">
-                                    <button onClick={handleClickOpen1}  style={{width:80,backgroundColor:"#45CBB2",color:"#fff",border:"none"}}>Modal</button>
+                                  <ShareIcon onClick={handleToggle}  style={{color:"#45CBB2",cursor:"pointer"}} />
+                                  
                                 </TableCell>
                               </TableRow>
                           </TableBody>
@@ -349,6 +404,71 @@ dividers>
                   </TableCell>
                 </TableRow>
               </React.Fragment>
+
+              <Backdrop
+     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+     open={open2}
+     onClick={handleClose2}
+   >
+     <div style={{display: "flex",padding:10,justifyContent:"space-between",width:250,backgroundColor:"#fff",borderRadius:40}}>
+
+     <div>
+       <EmailShareButton
+        title={`${doc_name}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={`${doc_desc}`}
+      >
+        <EmailIcon  size={32} round />
+      </EmailShareButton>
+       </div>
+
+       <div>
+       <FacebookShareButton
+        title={`${doc_name}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        // quote={"Talking is easy just show me the codes."}
+        hashtag={"#academicsurvey"}
+        description={`${doc_desc}`}
+        className=""
+      >
+        <FacebookIcon size={32} round />
+      </FacebookShareButton>
+       </div>
+       <div>
+       <TwitterShareButton
+        title={`${doc_name}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={`${doc_desc}`}
+      >
+        <TwitterIcon size={32} round />
+      </TwitterShareButton>
+       </div>
+       <div>
+       <WhatsappShareButton
+        title={`${doc_name}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={`${doc_desc}`}
+      >
+        <WhatsappIcon size={32} round />
+      </WhatsappShareButton>
+       </div>
+
+              <div>
+       <LinkedinShareButton
+        title={`${doc_name}`}
+        url={`https://simple-academic-survey.web.app/surveys/replies/${postId}/`}
+        hashtag={"#academicsurvey"}
+        description={`${doc_desc}`}
+      >
+        <LinkedinIcon size={32} round />
+      </LinkedinShareButton>
+       </div>  
+
+     </div>
+   </Backdrop>
               <BootstrapDialog
           onClose={handleClose1}
           aria-labelledby="customized-dialog-title"
@@ -372,11 +492,11 @@ dividers>
                 </div>
               
                 {
-                questions.map((question,qindex)=>(
+                questions?.map((question,qindex)=>(
                     <div className="user_form_questions">
                     <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px",fontSize:"14px"}} >{qindex+1}.  {question.questionText}</Typography>
                     {
-                            question.options.map((ques,index)=>(
+                            question?.options.map((ques,index)=>(
                               
                               <div key={index} style={{marginBottom:"5px"}}>
                                   <div style={{display: 'flex'}}>
@@ -384,18 +504,18 @@ dividers>
                                     
                                       {
 
-                                        question.questionType != "radio" ? (  
-                                          question.questionType != 'text' ? (
+                                        question?.questionType != "radio" ? (  
+                                          question?.questionType != 'text' ? (
                                         <label>
                                         <input
                                         
-                                        type={question.questionType}
+                                        type={question?.questionType}
                                         name={qindex}
-                                        value= {ques.optionText}
+                                        value= {ques?.optionText}
                                         className="form-check-input"
-                                        required={question.required}
+                                        required={question?.required}
                                         style={{margnLeft:"5px",marginRight:"5px"}}
-                                        onChange={(e)=>{selectcheck(e.target.checked,question.questionText,ques.optionText)}}
+                                        onChange={(e)=>{selectcheck(e.target.checked,question?.questionText,ques?.optionText)}}
                                         /> 
                                         </label>): (
 
@@ -405,11 +525,11 @@ dividers>
 
 <div  className="InputText">
 <TextField
-              type={question.questionType}
+              type={question?.questionType}
                 name={qindex}
-                 required={question.required}
+                 required={question?.required}
                style={{margnLeft:"5px",marginRight:"5px"}}
-           onChange={(e)=>{selectinput(question.questionText,setQuestionOption(e.target.value))}}
+           onChange={(e)=>{selectinput(question?.questionText,setQuestionOption(e.target.value))}}
           label="Your answer"
           placeholder="Type here..."
           multiline
@@ -421,11 +541,11 @@ dividers>
 </div>
 <div  className="InputText1">
 <TextField
-              type={question.questionType}
+              type={question?.questionType}
               name={qindex}
-               required={question.required}
+               required={question?.required}
              style={{margnLeft:"5px",marginRight:"5px"}}
-         onChange={(e)=>{selectinput(question.questionText,setQuestionOption(e.target.value))}}
+         onChange={(e)=>{selectinput(question?.questionText,setQuestionOption(e.target.value))}}
         label="Your answer"
         placeholder="Type here..."
         multiline
@@ -445,15 +565,15 @@ dividers>
                                         :(  <label>
                                           <input
                                             
-                                            type={question.questionType}
+                                            type={question?.questionType}
                                             name={qindex}
-                                            value= {ques.optionText}
+                                            value= {ques?.optionText}
                                             className="form-check-input"
-                                            required={question.required}
+                                            required={question?.required}
                                             style={{margnLeft:"5px",marginRight:"5px"}}
-                                            onChange={()=>{select(question.questionText,ques.optionText)}}
+                                            onChange={()=>{select(question?.questionText,ques?.optionText)}}
                                           />
-                                      {ques.optionText}
+                                      {ques?.optionText}
                                         </label>)
 
                                       }

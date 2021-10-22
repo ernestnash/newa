@@ -75,6 +75,9 @@ function Surveyreply() {
    var [answer,setAnswer] = useState([])
    const [open, setOpen] = React.useState(false);
    const [open1, setOpen1] = React.useState(false);
+   let {user} = useSelector((state)=> ({...state}));
+
+
 
 //    var [{questions,doc_name,doc_desc},dispatch] = useStateValue("")
 
