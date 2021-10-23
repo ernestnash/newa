@@ -870,7 +870,7 @@ const deleteUser1 = (e) => {
   return (
     <>
     <Box sx={{ flexGrow: 1 }} >
-      <AppBar style={{position: "fixed",zIndex:1,top:0,backgroundColor:"#000"}} position="static">
+      <AppBar style={{position: "fixed",zIndex:999,top:0,backgroundColor:"#000"}} position="static">
         <Toolbar>
             <a href={`/`}>
         <img src={img} style={{height:60,width:120,marginLeft:-15, objectFit:"cover"}}/>
