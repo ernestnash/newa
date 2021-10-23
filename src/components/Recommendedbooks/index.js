@@ -34,6 +34,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { toast, ToastContainer } from 'react-toastify'
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
+import Backdrop from '@mui/material/Backdrop';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuDialogContent-root': {
@@ -82,6 +83,13 @@ function Recommendedbooks({history}) {
   const [academicFieldTopic, setAcademicFieldTopic] = useState("")
   const [academicBook, setAcademicBook] = useState("")
   const [open1, setOpen1] = React.useState(false);
+  const [open2, setOpen2] = React.useState(true);
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+  const handleToggle = () => {
+    setOpen2(true);
+  };
 
 
   const handleClickOpen1 = () => {
@@ -119,7 +127,11 @@ function Recommendedbooks({history}) {
       academicBook,     
     }).then(ref =>{
       setLoading(false)
-      toast.success("Source Added")
+      toast.success("successfully added source")
+      setAcademicField("")
+      setAcademicFieldTopic("")
+      setAcademicBook("")
+      setOpen(false)
     })
     }
 
@@ -190,8 +202,19 @@ function Recommendedbooks({history}) {
     return (
       <body>
         <ToastContainer />
-    <Header />
+        {/* {loading ?(
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open2}
+        onClick={handleClose2}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+        ):(
+       <> */}
+        <Header />
       <div>
+
           
       {/* <Box sx={{ pb: 7 }} ref={ref}> */}
       <div className="RecommendedBody">
@@ -265,32 +288,16 @@ icon={
 </div>
 
 {loading ?(
-       <BootstrapDialog
-     onClose={handleClose1}
-     aria-labelledby="customized-dialog-title"
-     open={open1}
-    
-   >
-
-     <DialogContent 
-      style={{backgroundColor: "trasparency"}}          
-dividers>
-     <Typography gutterBottom >
-     
-<div style={{alignItems: "center",display: "flex"}}>
-<div><CircularProgress /></div>
-<div style={{marginLeft:10}}> Loading... </div>
-</div>
-
- 
-     </Typography>
-
-
-     </DialogContent>
-
-   </BootstrapDialog>
-):(
-  <BootstrapDialog
+        <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open2}
+        onClick={handleClose2}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+        ):(
+      <>
+      <BootstrapDialog
 onClose={handleClose}
 aria-labelledby="customized-dialog-title"
 open={open}
@@ -341,11 +348,16 @@ multiline
 </Button>
 </DialogActions>
 </BootstrapDialog>
-)}
 
+      </>
+        )}
+  
 
 
   </div>
+
+
+   
 </body>
     )
   // }
