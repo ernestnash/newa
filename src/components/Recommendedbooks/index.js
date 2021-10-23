@@ -84,6 +84,31 @@ function Recommendedbooks({history}) {
   const [academicBook, setAcademicBook] = useState("")
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(true);
+  const [posts2, setPosts2] = useState([]);
+  const [input1, setInput1] = useState("");
+  const [posts1, setPosts1] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  useEffect(() => {
+    db.collection('recommended').onSnapshot((snapshot) => {
+      setPosts2(snapshot.docs.map((doc) => doc.data()))
+    })
+
+    if (posts2 !== undefined) {
+      const finalPosts = posts2.filter(res => {
+        return res.formTitle.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+      })
+
+      setFilteredPosts(finalPosts)
+    }
+  }, [searchTerm])
+
+  const updateSearchResults = (e) => {
+    setSearchTerm(e.target.value)
+    // document.getElementsByClassName('dropdown-content3')[0].style.display = 'auto';
+  }
+
   const handleClose2 = () => {
     setOpen2(false);
   };
@@ -169,57 +194,20 @@ function Recommendedbooks({history}) {
     // { icon: <ShareIcon />, name: 'Share' },
   ];
 
-//   if(loading){
-//     return(
-
-//      <BootstrapDialog
-//      onClose={handleClose1}
-//      aria-labelledby="customized-dialog-title"
-//      open={open1}
-    
-//    >
-
-//      <DialogContent 
-//       style={{backgroundColor: "trasparency"}}          
-// dividers>
-//      <Typography gutterBottom >
-     
-// <div style={{alignItems: "center",display: "flex"}}>
-// <div><CircularProgress /></div>
-// <div style={{marginLeft:10}}> Loading... </div>
-// </div>
-
- 
-//      </Typography>
-
-
-//      </DialogContent>
-
-//    </BootstrapDialog>
-     
-//     )
-//   }else{
     return (
       <body>
         <ToastContainer />
-        {/* {loading ?(
-        <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open2}
-        onClick={handleClose2}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-        ):(
-       <> */}
+
         <Header />
       <div>
 
           
-      {/* <Box sx={{ pb: 7 }} ref={ref}> */}
       <div className="RecommendedBody">
 <div style={{textAlign: "center",fontSize:30,fontWeight:"600"}}><span>RESEARCH PAPERS AND BOOKS</span></div>
-
+<div style={{marginBottom:5}} class="search-box">
+    <button class="btn-search"><i class="fas fa-search"></i></button>
+    <input type="text"  onChange={updateSearchResults} class="input-search" placeholder="Search available sources..."/>
+  </div>
 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
 <Table aria-label="collapsible table"
