@@ -32,7 +32,8 @@ import TextField from '@mui/material/TextField';
 import Collapse from '@mui/material/Collapse';
 import CircularProgress from '@mui/material/CircularProgress';
 import { toast, ToastContainer } from 'react-toastify'
-
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuDialogContent-root': {
@@ -60,7 +61,7 @@ const BootstrapDialogTitle = (props) => {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <CloseIcon />
+          <CloseIcon style={{color:"#45CBB2"}}/>
         </IconButton>
       ) : null}
     </DialogTitle>
@@ -150,8 +151,8 @@ function Recommendedbooks({history}) {
 
 
   const actions = [
-    { icon: <PostAddIcon onClick={handleClickOpen}/>, name: 'Recommend a paper\book' },
-    { icon: <QueryBuilderIcon onClick={()=> toast.error("Oops!, sorry we're still working on this\nBear with us kindly and thank you.")}/>, name: 'Querry/Help' },
+    { icon: <PostAddIcon style={{color:"#45CBB2"}} onClick={handleClickOpen}/>, name: 'Recommend a paper/book' },
+    { icon: <QueryBuilderIcon style={{color:"#45CBB2"}} onClick={()=> toast.error("Oops!, sorry we're still working on this\nBear with us kindly and thank you.")}/>, name: 'Querry/Help' },
     // { icon: <PrintIcon />, name: 'Print' },
     // { icon: <ShareIcon />, name: 'Share' },
   ];
@@ -242,7 +243,10 @@ stickyHeader aria-label="sticky table">
 <SpeedDial
 ariaLabel="SpeedDial basic example"
 sx={{ position: 'absolute', bottom: 80, right: 16 }}
-icon={<SpeedDialIcon />}
+icon={
+  <Fab style={{backgroundColor: "#45CBB2",color: "#fff"}} aria-label="add">
+  <SpeedDialIcon />
+</Fab>}
 >
 {actions.map((action) => (
 <SpeedDialAction
