@@ -100,14 +100,14 @@ useEffect(() => {
 
  useEffect(()=>{
     questions1?.questions.map((q)=>{
-    answer.push({
+    answer?.push({
       "question": q.questionText,
       "answer" : " "
     })
     
   })
   questions1?.questions.map((q,qindex)=>{
-     quest.push(    {"header": q.questionText, "key": q.questionText })
+     quest?.push(    {"header": q?.questionText, "key": q?.questionText })
   })
   console.log(answer)
 
@@ -119,7 +119,7 @@ useEffect(() => {
    var  post_answer_data = {}
 
    function selectinput(que,option){
-    var k =answer.findIndex((ele)=>(ele.question == que))
+    var k =answer?.findIndex((ele)=>(ele?.question == que))
 
     answer[k].answer=questionOption
      setAnswer(answer)
@@ -127,9 +127,9 @@ useEffect(() => {
 
    function selectcheck(e,que,option){
      var d =[]
-  var k =answer.findIndex((ele)=>(ele.question == que))
-  if(answer[k].answer){
-    d=answer[k].answer.split(",")
+  var k =answer?.findIndex((ele)=>(ele?.question == que))
+  if(answer[k]?.answer){
+    d=answer[k]?.answer.split(",")
 
   }
 
@@ -137,12 +137,12 @@ useEffect(() => {
     d.push(option)
   }
   else{
-    var n=d.findIndex((el)=>(el.option == option))
+    var n=d?.findIndex((el)=>(el?.option == option))
     d.splice(n,1)
 
   }
 
-   answer[k].answer=d.join(",")
+   answer[k].answer=d?.join(",")
 
     setAnswer(answer)
     console.log(answer)
