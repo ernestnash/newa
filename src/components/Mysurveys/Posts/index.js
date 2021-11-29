@@ -42,6 +42,7 @@ import XLSX from 'xlsx'
 import PrintIcon from '@material-ui/icons/Print'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import Responses from "../../Responses"
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import SubjectIcon from '@mui/icons-material/Subject';
@@ -113,6 +114,7 @@ const [answers, setAnswer] = React.useState({})
   const [surveyChecked, setSurveyChecked] = useState("");
   const [loading, setLoading] = useState(false)
   const [open2, setOpen2] = React.useState(false);
+  const [responses1, setResponses1] = React.useState([]);
   const handleClose2 = () => {
     setOpen2(false);
   };
@@ -164,6 +166,15 @@ const [answers, setAnswer] = React.useState({})
   }, [numberOfSurvey]);
 
 
+
+  useEffect(() => {
+    db.collection('surveys').doc(postId).collection("responses").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+        setResponses1(snapshot.docs.map(doc => ({
+            id: doc.id,
+            post: doc.data(),
+        })));
+    })
+}, []);
 
 function onRadio(questionId) {
    return function(event) {
@@ -519,16 +530,28 @@ function onRadio(questionId) {
         >
           <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose1}>
   
-          MODAL FORM
+          Responses
           </BootstrapDialogTitle>
-          <DialogContent           style={{height: 800 }}
+          <DialogContent           style={{height: 800,paddingLeft: 100,paddingRight: 100 }}
  dividers>
-          <Typography gutterBottom>
-          
 
-  
-          </Typography>
-    hello  
+{
+    responses1.map(({ id, post }) => (
+        <Responses 
+        key={id} 
+        postId={id} 
+        formId={post.formId} 
+        fromEmail={post.fromEmail} 
+        fromId={post.fromId}
+        questions={post.questions1} 
+        timestamp={post.timestamp}        
+        formDescription={formDescription}
+        formTitle={formTitle}
+        posts={posts}
+        />
+
+    ))
+}
    
   
           </DialogContent>
