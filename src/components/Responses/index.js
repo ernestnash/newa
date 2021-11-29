@@ -169,9 +169,9 @@ function Addpost({postId, formId, fromEmail, fromId, questions, timestamp, formD
 
               {
                 questions?.map((question,qindex)=>(
-                    <div className="user_form_questions">
+                    <div className="">
                     <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px",fontSize:"14px"}} >{qindex+1}.  {question.question}</Typography>
-                    <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px",fontSize:"14px"}} >Answers:  {question.answer}</Typography>
+                    <Typography  style={{fontSize:"15px",fontWeight:"400",letterSpacing: '.1px',lineHeight:'24px',paddingBottom:"8px",fontSize:"14px"}} ><span><b>Answers:</b></span>  {question.answer}</Typography>
                     {/* {
                             question?.options?.map((ques,index)=>(
                               
